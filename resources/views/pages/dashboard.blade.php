@@ -312,7 +312,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2016 - <script>document.write(new Date().getFullYear())</script> <a href="/">曹操速遞</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

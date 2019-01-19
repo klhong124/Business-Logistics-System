@@ -16,8 +16,10 @@
 // });
 
 Route::get('/', 'DataController@index');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+// auth
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+// sign out
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
