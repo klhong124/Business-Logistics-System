@@ -13,14 +13,11 @@ use App\Http\Requests;
 
 class DataController extends Controller
 {
-	public function home(){
-		// $subdistricts = Home_Model::getAllSubdistricts();
-		// $subdistricts_json = json_encode($subdistricts);
-		$test = DB::table('test')->select('email')->get();
-		echo "<pre>". print_r($test,1). "</pre>";
-		echo "string";
-		// return View::make('/home')->with(array("test" =>$test);
+	// homepage
+	public function index(){
+		return View::make('pages/index');
 	}
+
 	public function search(){
 
 		if (empty($_GET['query']) AND empty($_GET['location'])){
