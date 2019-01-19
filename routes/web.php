@@ -20,3 +20,4 @@ Route::get('/', 'DataController@index');
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
