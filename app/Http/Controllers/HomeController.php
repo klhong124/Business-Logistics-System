@@ -26,4 +26,8 @@ class HomeController extends Controller
         return view('pages/dashboard');
         // return view('home');
     }
+
+    // public function orders(){
+	// 	return View::make('pages/order-status');
+	// }
 }

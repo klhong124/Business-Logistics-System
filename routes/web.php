@@ -18,8 +18,14 @@
 Route::get('/', 'DataController@index');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/order-status', 'DataController@orders');
+    // more routes here
+});
+
+
 // auth
 Auth::routes();
-
 // sign out
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
