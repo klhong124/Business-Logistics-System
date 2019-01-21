@@ -20,7 +20,8 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/order-status', 'DataController@orders');
+    Route::get('/orders', 'DataController@orders');
+    Route::get('/order-details', 'DataController@details');
     // more routes here
 });
 

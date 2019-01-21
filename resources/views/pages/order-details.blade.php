@@ -4,12 +4,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Order Status
+        Order Details
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Order Status</li>
+        <li class="active">Order Details</li>
       </ol>
     </section>
 
