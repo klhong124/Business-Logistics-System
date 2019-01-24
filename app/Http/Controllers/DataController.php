@@ -19,59 +19,44 @@ class DataController extends Controller
 	}
 
 	public function orders() {
-		return View::make('pages/orders');
+		$retailers = DB::table('retailer')
+			->select('id', 'retailer_name')
+			->get();
+		// echo '<pre>'.print_r($retailers, 1).'</pre>';
+		return View::make('pages/orders')->with(array('retailers' => $retailers));
 	}
-
+	// order details
 	public function details() {
 		return View::make('pages/order-details');
 	}
-
+	// profile
 	public function profile() {
 		return View::make('pages/profile');
 	}
-
+	// change password
 	public function changePassword() {
 		return View::make('pages/change-password');
 	}
 
-	
-	// public function search(){
-	//
-	// 	if (empty($_GET['query']) AND empty($_GET['location'])){
-	//
-	// 		//nothing search
-	// 		return "Error";
-	//
-	// 	} elseif (empty($_GET['location'])) {
-	//
-	// 		// search item only
-	// 		$keyword = $_GET['query'];
-	// 		$page = empty($_GET['page'])? 1 : $_GET['page'];
-	// 		list($results, $count) = Home_Model::searchByKeyword($keyword, $page);
-	//
-	// 	} elseif (empty($_GET['query'])) {
-	//
-	// 		// search by location only
-	// 		$keyword = $_GET['location'];
-	// 		$page = empty($_GET['page'])? 1 : $_GET['page'];
-	// 		list($results, $count) = Home_Model::searchByArea($keyword, $page);
-	// 	} else {
-	//
-	// 		//search by both location and item
-	// 		$query = $_GET['query'];
-	// 		$location = $_GET['location'];
-	// 		$page = empty($_GET['page'])? 1 : $_GET['page'];
-	//
-	// 		list($results, $count) = Home_Model::searchBoth($query, $location, $page);
-	//
-	// 	}
-	// 	// echo "<pre>". print_r($results). "</pre>";
-	// 	$subdistricts = Home_Model::getAllSubdistricts();
-	// 	$subdistricts_json = json_encode($subdistricts);
-	// 	echo "<pre>". print_r($results, 1). "</pre>";
-	// 	// echo $subdistricts_json;
-	// 	$totalPage = ceil($count/20);
-	// 	return View::make('public/search-result')->with(array("results" =>$results,"subdistricts"=>$subdistricts,"subdistricts_json"=>$subdistricts_json, "currentPage" => $page, "totalPage"=> $totalPage));
-	// }
+	// reset password (not yet done)
+	public function resetPassword(Request $request){
+		if(Auth::Check()){
+			if (empty($_POST['oldPassword'])){
+				Session::flash('message', 'Please input you correct password!');
+			}
+		}
+		return View::make('pages/change-password');
+		echo '<pre>'.print_r($_POST, 1).'</pre>';
+	}
+
+	public function viewRetailer($id) {
+		$data = DB::table('retailer')
+			->select('user_id', 'retailer_name', 'name', 'email' , 'created_at')
+			->join('users', 'users.id', '=', 'retailer.user_id')
+			->where('retailer.id', $id)
+			->first();
+			// echo '<pre>'.print_r($data, 1).'</pre>';
+		return View::make('pages/retailer');
+	}
 
 }

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Account
     Route::get('/profile', 'DataController@profile');
     Route::get('/change-password', 'DataController@changePassword');
+    Route::post('/reset-password', 'DataController@resetPassword');
+    Route::get('/retailer/{id}', 'DataController@viewRetailer');
 });
 
 

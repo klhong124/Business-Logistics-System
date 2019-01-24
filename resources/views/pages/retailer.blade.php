@@ -4,12 +4,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Profile
+        Retailer
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Profile</li>
+        <li><a href="url('dashboard')"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Retailer</li>
       </ol>
     </section>
 

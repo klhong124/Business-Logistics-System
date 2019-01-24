@@ -34,21 +34,38 @@
                             <th>Details</th>
                             <th>Updated At</th>
                             <th>Archived</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for ($i = 0; $i < 100; $i++)
+                        @foreach($retailers as $value)
                             <tr>
                                 <td>12345678</td>
                                 <td>
-                                    <button type="button" class="btn btn-block btn-info">Apple Inc.</button>
+                                    <a href="/retailer/{{$value->id}}">
+                                        <button type="button" class="btn btn-block btn-sm btn-link">{{$value->retailer_name}}</button>
+                                    </a>
                                 </td>
                                 <td>2018-1-12 12:00:00</td>
-                                <td><a href="/order-details"><button type="button" class="btn btn-block btn-primary">See More</button></a></td>
+                                <td><a href="/order-details"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
                                 <td>2018-1-12 12:00:00</td>
                                 <td>Yes/No</td>
+                                <td><button type="button" class="btn btn-block btn-sm btn-primary">Edit</button></td>
                             </tr>
-                        @endfor
+                        @endforeach
+                        <!-- @for ($i = 0; $i < 100; $i++)
+                            <tr>
+                                <td>12345678</td>
+                                <td>
+                                    <button type="button" class="btn btn-block btn-sm btn-link">Apple Inc.</button>
+                                </td>
+                                <td>2018-1-12 12:00:00</td>
+                                <td><a href="/order-details"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
+                                <td>2018-1-12 12:00:00</td>
+                                <td>Yes/No</td>
+                                <td><button type="button" class="btn btn-block btn-sm btn-primary">Edit</button></td>
+                            </tr>
+                        @endfor -->
                     </tbody>
                 </table>
             <!-- </section> -->
@@ -69,7 +86,7 @@
                 'columnDefs': [
                     {
                         "className": "text-center",
-                        "orderable": false, "targets": [1, 3],
+                        "orderable": false, "targets": [1, 3, 6],
                     }
                 ]
             });
