@@ -27,7 +27,7 @@ class DataController extends Controller
 	}
 
 
-
+	
 	// public function search(){
 	//
 	// 	if (empty($_GET['query']) AND empty($_GET['location'])){
