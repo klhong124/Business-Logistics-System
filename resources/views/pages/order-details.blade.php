@@ -8,7 +8,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">Order Details</li>
       </ol>
     </section>

@@ -42,7 +42,7 @@
                             <tr>
                                 <td>12345678</td>
                                 <td>
-                                    <a href="/retailer/{{$value->id}}">
+                                    <a href="{{url('/retailer')}}/{{$value->id}}">
                                         <button type="button" class="btn btn-block btn-sm btn-link">{{$value->retailer_name}}</button>
                                     </a>
                                 </td>

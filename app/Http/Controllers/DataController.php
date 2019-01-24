@@ -51,12 +51,12 @@ class DataController extends Controller
 
 	public function viewRetailer($id) {
 		$data = DB::table('retailer')
-			->select('user_id', 'retailer_name', 'name', 'email' , 'created_at')
+			->select('user_id', 'name', 'email' , 'created_at', 'retailer.*')
 			->join('users', 'users.id', '=', 'retailer.user_id')
 			->where('retailer.id', $id)
 			->first();
-			// echo '<pre>'.print_r($data, 1).'</pre>';
-		return View::make('pages/retailer');
+			echo '<pre>'.print_r($data, 1).'</pre>';
+		return View::make('pages/retailer')->with(array('data' => $data ));
 	}
 
 }
