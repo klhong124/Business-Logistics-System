@@ -26,6 +26,13 @@ class DataController extends Controller
 		return View::make('pages/order-details');
 	}
 
+	public function profile() {
+		return View::make('pages/profile');
+	}
+
+	public function changePassword() {
+		return View::make('pages/change-password');
+	}
 
 	
 	// public function search(){

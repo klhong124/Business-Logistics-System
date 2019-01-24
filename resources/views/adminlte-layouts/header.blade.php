@@ -263,8 +263,8 @@ desired effect
         <li class=""><a href="/orders"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
         <li class="header">My Account</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class=""><a href="#"><i class="fa fa-user-circle"></i> <span>Profile</span></a></li>
-        <li class=""><a href="#"><i class="fa fa-key"></i> <span>Change Password</span></a></li>
+        <li class=""><a href="/profile"><i class="fa fa-user-circle"></i> <span>Profile</span></a></li>
+        <li class=""><a href="/change-password"><i class="fa fa-key"></i> <span>Change Password</span></a></li>
         <!-- <li class="treeview">
           <a href="#"><i class="fa fa-user-circle"></i> <span>My Account</span>
             <span class="pull-right-container">

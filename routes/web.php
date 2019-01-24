@@ -15,15 +15,23 @@
 //     return view('pages/dashboard');
 // });
 
+
 Route::get('/', 'DataController@index');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
 Route::group(['middleware' => 'auth'], function () {
+	// main activities
     Route::get('/orders', 'DataController@orders');
     Route::get('/order-details', 'DataController@details');
-    // more routes here
+
+    // Account
+    Route::get('/profile', 'DataController@profile');
+    Route::get('/change-password', 'DataController@changePassword');
 });
+
+
+
 
 
 // auth
