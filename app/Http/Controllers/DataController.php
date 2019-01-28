@@ -28,7 +28,47 @@ class DataController extends Controller
 	}
 	// order details
 	public function details() {
-		return View::make('pages/order-details');
+		$order_details = DB::table('order_details')
+			->select('id', 'warehouse', 'sent_datetime', 'arrived_datetime', 'received_datetime')
+			->get();
+
+			// if ($order_details[0]->sent_datetime !== null) {
+			// 	$sent_datetime = strtotime( $order_details[0]->sent_datetime );
+			//    	$sent_date = date('d-M-Y', $sent_datetime);
+			// 	$sent_time = date('H:m:s',$sent_datetime);
+			// 	# code...
+			// }
+			// if ($order_details[0]->arrived_datetime !== null) {
+			// 	$arrived_datetime = strtotime( $order_details[0]->arrived_datetime );
+		 //   		$arrived_date = date('d-M-Y', $arrived_datetime);
+			// 	$arrived_time = date('H:m:s',$arrived_datetime);
+			// 	# code...
+			// }
+			// if ($order_details[0]->arrived_datetime !== null) {
+			// 	$received_datetime = strtotime( $order_details[0]->received_datetime );
+		 //   		$received_date = date('d-M-Y', $received_datetime);
+			// 	$received_time = date('H:m:s',$received_datetime);
+			// 	# code...
+			// }
+			// // $sent_datetime = strtotime( $order_details[0]->sent_datetime );
+		 // //   	$sent_date = date('d-M-Y', $sent_datetime);
+			// // $sent_time = date('H:m:s',$sent_datetime);
+
+			// // $arrived_datetime = strtotime( $order_details[0]->arrived_datetime );
+		 // //   	$arrived_date = date('d-M-Y', $arrived_datetime);
+			// // $arrived_time = date('H:m:s',$arrived_datetime);
+
+			// // $received_datetime = strtotime( $order_details[0]->received_datetime );
+		 // //   	$received_date = date('d-M-Y', $received_datetime);
+			// // $received_time = date('H:m:s',$received_datetime);
+
+			// echo $received_datetime;
+			// echo $received_date;
+
+
+		return View::make('pages/order-details')->with(array(
+			'order_details' => $order_details,
+		));
 	}
 	// profile
 	public function profile($user_id) {
@@ -56,7 +96,7 @@ class DataController extends Controller
 
 	public function viewRetailer($id) {
 		$data = DB::table('retailer')
-			->select('user_id', 'name', 'email' , 'created_at', 'retailer.*')
+			->select('user_id', 'retailer_name', 'name', 'email' , 'created_at')
 			->join('users', 'users.id', '=', 'retailer.user_id')
 			->where('retailer.id', $id)
 			->first();
