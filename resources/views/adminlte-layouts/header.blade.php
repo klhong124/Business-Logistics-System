@@ -10,17 +10,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>曹操 | 速遞</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="/dist/css/skins/skin-red-light.min.css">
+  <link rel="stylesheet" href="{{asset('dist/css/skins/skin-red-light.min.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,7 +60,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="/" class="logo">
+    <a href="{{url('/')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>C</b>C</span>
       <!-- logo for regular state and mobile devices -->
@@ -164,11 +164,11 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Main Activities</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class=""><a href="/orders"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
+        <li class=""><a href="{{url('/')}}/admin/orders"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
         <li class="header">My Account</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class=""><a href="/profile"><i class="fa fa-user-circle"></i> <span>Profile</span></a></li>
-        <li class=""><a href="/change-password"><i class="fa fa-key"></i> <span>Change Password</span></a></li>
+        <li class=""><a href="{{url('/')}}/admin/profile/{{Auth::user()->id}}"><i class="fa fa-user-circle"></i> <span>Profile</span></a></li>
+        <li class=""><a href="{{url('/')}}/admin/change-password"><i class="fa fa-key"></i> <span>Change Password</span></a></li>
         <!-- <li class="treeview">
           <a href="#"><i class="fa fa-user-circle"></i> <span>My Account</span>
             <span class="pull-right-container">

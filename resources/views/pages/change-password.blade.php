@@ -8,7 +8,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{url('/')}}/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">Change Password</li>
       </ol>
     </section>
@@ -27,24 +27,27 @@
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-        <form action="/reset-password" method="POST">
-          {!! csrf_field() !!}
-          <div class="form-group">
-            <label>Origin Password</label>
-            <input type="password" class="form-control" name="oldPassword" placeholder="Password to login">
-            <small class="form-text text-muted">We'll never disclose your with anyone else.</small>
-          </div>
-          <div class="form-group">
-            <label>New Password</label>
-            <input type="password" class="form-control" name="newPasswordA" placeholder="New Password">
-          </div>
-          <div class="form-group">
-            <label>Confirm New Password</label>
-            <input type="password" class="form-control" name="newPasswordB" placeholder="New Password">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
+        <div class="box box-danger">
+            <div class="box-body">
+                <form action="/admin/reset-password" method="POST">
+                  {!! csrf_field() !!}
+                  <div class="form-group">
+                    <label>Origin Password</label>
+                    <input type="password" class="form-control" name="oldPassword" placeholder="Password to login">
+                    <small class="form-text text-muted">We'll never disclose your with anyone else.</small>
+                  </div>
+                  <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" class="form-control" name="newPasswordA" placeholder="New Password">
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" class="form-control" name="newPasswordB" placeholder="New Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </section>
     <!-- /.content -->
   </div>

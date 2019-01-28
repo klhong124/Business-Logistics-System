@@ -1,6 +1,6 @@
 @include('adminlte-layouts.header')
   <!-- Content Wrapper. Contains page content -->
-    <script src="dist/jquery.min.js"></script>
+    <script src="{{asset('dist/jquery.min.js')}}"></script>
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -10,7 +10,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{url('/')}}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">Orders</li>
       </ol>
     </section>
@@ -42,12 +42,12 @@
                             <tr>
                                 <td>12345678</td>
                                 <td>
-                                    <a href="{{url('/retailer')}}/{{$value->id}}">
+                                    <a href="{{url('/')}}/admin/retailer/{{$value->id}}">
                                         <button type="button" class="btn btn-block btn-sm btn-link">{{$value->retailer_name}}</button>
                                     </a>
                                 </td>
                                 <td>2018-1-12 12:00:00</td>
-                                <td><a href="/order-details"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
+                                <td><a href="{{url('/')}}/admin/order-details"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
                                 <td>2018-1-12 12:00:00</td>
                                 <td>Yes/No</td>
                                 <td><button type="button" class="btn btn-block btn-sm btn-primary">Edit</button></td>
@@ -77,8 +77,8 @@
 
   @include('adminlte-layouts.footer')
   <!-- datatable -->
-    <link rel="stylesheet" type="text/css" href="dist/datatables/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="dist/datatables/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('dist/datatables/jquery.dataTables.css')}}">
+    <script type="text/javascript" charset="utf8" src="{{asset('dist/datatables/jquery.dataTables.js')}}"></script>
 
     <script>
         $(document).ready(function() {

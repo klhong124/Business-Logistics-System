@@ -21,15 +21,18 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
 Route::group(['middleware' => 'auth'], function () {
-	// main activities
-    Route::get('/orders', 'DataController@orders');
-    Route::get('/order-details', 'DataController@details');
+    Route::group(['prefix' => 'admin'], function(){
+    	// main activities
+        Route::get('/orders', 'DataController@orders');
+        Route::get('/order-details', 'DataController@details');
 
-    // Account
-    Route::get('/profile', 'DataController@profile');
-    Route::get('/change-password', 'DataController@changePassword');
-    Route::post('/reset-password', 'DataController@resetPassword');
-    Route::get('/retailer/{id}', 'DataController@viewRetailer');
+        // Account
+        Route::get('/profile/{user_id}', 'DataController@profile');
+        Route::get('/change-password', 'DataController@changePassword');
+        Route::post('/reset-password', 'DataController@resetPassword');
+        Route::get('/retailer/{id}', 'DataController@viewRetailer');
+        Route::post('/post-retailer-info', 'DataController@postRetailerInfo');
+    });
 });
 
 
