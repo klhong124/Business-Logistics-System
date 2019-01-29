@@ -15,15 +15,28 @@
 //     return view('pages/dashboard');
 // });
 
+
 Route::get('/', 'DataController@index');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/orders', 'DataController@orders');
-    Route::get('/order-details', 'DataController@details');
-    // more routes here
+    Route::group(['prefix' => 'admin'], function(){
+    	// main activities
+        Route::get('/orders', 'DataController@orders');
+        Route::get('/order-details', 'DataController@details');
+
+        // Account
+        Route::get('/profile/{user_id}', 'DataController@profile');
+        Route::get('/change-password', 'DataController@changePassword');
+        Route::post('/reset-password', 'DataController@resetPassword');
+        Route::get('/retailer/{id}', 'DataController@viewRetailer');
+        Route::post('/post-retailer-info', 'DataController@postRetailerInfo');
+    });
 });
+
+
+
 
 
 // auth
