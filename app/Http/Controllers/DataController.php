@@ -96,12 +96,12 @@ class DataController extends Controller
 
 	public function viewRetailer($id) {
 		$data = DB::table('retailer')
-			->select('user_id', 'retailer_name', 'name', 'email' , 'created_at')
+			->select('retailer.id', 'retailer_name', 'retailer.url', 'retailer.description' , 'users.created_at')
 			->join('users', 'users.id', '=', 'retailer.user_id')
 			->where('retailer.id', $id)
 			->first();
 			// echo '<pre>'.print_r($data, 1).'</pre>';
-		return View::make('pages/retailer')->with(array('data' => $data ));
+		return View::make('pages/retailer')->with(array('data' => $data));
 	}
 
 	public function postRetailerInfo() {
