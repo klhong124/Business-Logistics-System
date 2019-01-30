@@ -21,7 +21,8 @@
         -------------------------->
         <div class="box box-danger">
             <div class="box-body">
-                <form role="form">
+                <form method="POST" action="/admin/change-profile">
+                    {!! csrf_field() !!}
                     <!-- text input -->
                     <div class="form-group">
                         <label>Email:</label>
@@ -33,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label>User Name:</label>
-                        <input type="text" class="form-control" value="{{$data->name}}">
+                        <input type="text" name="username" class="form-control" value="{{$data->name}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Confirm</button>
                 </form>

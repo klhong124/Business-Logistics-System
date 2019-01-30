@@ -24,13 +24,14 @@
         <!-- timeline -->
             <!-- Main content -->
             <!-- <section class="content"> -->
-
+        <div class="box box-danger">
+            <div class="box-body">
                 <table id="order-list" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Order Code</th>
+                            <th>Invoice No.</th>
                             <th>Client</th>
-                            <th>Created At</th>
+                            <th>Order Time</th>
                             <th>Details</th>
                             <th>Updated At</th>
                             <th>Archived</th>
@@ -49,7 +50,14 @@
                                 <td>2018-1-12 12:00:00</td>
                                 <td><a href="{{url('/')}}/admin/order-details"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
                                 <td>2018-1-12 12:00:00</td>
-                                <td>Yes/No</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" disabled>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                </td>
                                 <td><button type="button" class="btn btn-block btn-sm btn-primary">Edit</button></td>
                             </tr>
                         @endforeach
@@ -69,6 +77,8 @@
                     </tbody>
                 </table>
             <!-- </section> -->
+            </div>
+        </div>
 
     </section>
     <!-- /.content -->

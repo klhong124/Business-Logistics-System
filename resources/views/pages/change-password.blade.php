@@ -42,7 +42,7 @@
                   </div>
                   <div class="form-group">
                     <label>Confirm New Password</label>
-                    <input type="password" class="form-control" name="newPasswordB" placeholder="New Password">
+                    <input type="password" class="form-control" name="newPasswordB" placeholder="Confirm New Password">
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

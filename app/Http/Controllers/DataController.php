@@ -71,12 +71,23 @@ class DataController extends Controller
 		));
 	}
 	// profile
-	public function profile($user_id) {
+	public function profile() {
+		$user_id = Auth::user()->id;
 		$user_info = DB::table('users')
 			->select('id', 'name', 'email', 'created_at')
 			->where('id', $user_id)
 			->first();
 		return View::make('pages/profile')->with(array('data' => $user_info));
+	}
+	// change profile
+	public function changeProfile() {
+		$user_id = Auth::user()->id;
+		// print_r($_POST);
+		DB::table('users')
+			->where('id', $user_id)
+			->update(['name' => $_POST['username']]);
+			
+		return redirect()->back();
 	}
 	// change password
 	public function changePassword() {
@@ -123,7 +134,7 @@ class DataController extends Controller
 			return redirect()->back();
 		} else {
 			Session::flash('message', "Retailer name cannot be empty!");
-			return Redirect::back();
+			return redirect::back();
 		}
 	}
 }

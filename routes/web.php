@@ -27,7 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/order-details', 'DataController@details');
 
         // Account
-        Route::get('/profile/{user_id}', 'DataController@profile');
+        Route::get('/profile', 'DataController@profile');
+        Route::post('change-profile', 'DataController@changeProfile');
         Route::get('/change-password', 'DataController@changePassword');
         Route::post('/reset-password', 'DataController@resetPassword');
         Route::get('/retailer/{id}', 'DataController@viewRetailer');
