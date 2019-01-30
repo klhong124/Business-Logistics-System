@@ -8,7 +8,8 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('/')}}admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{url('/')}}/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="{{url('/')}}/admin/orders"><i class="fa fa-list-alt"></i> Orders</a></li>
         <li class="active">Order Details</li>
       </ol>
     </section>

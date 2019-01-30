@@ -113,7 +113,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{url('/')}}/admin/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <!-- <a href="#" class="btn btn-default btn-flat">Sign out</a> -->
@@ -122,10 +122,10 @@ desired effect
               </li>
             </ul>
           </li>
-          <!-- Control Sidebar Toggle Button -->
+          {{-- <!-- Control Sidebar Toggle Button -->
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </nav>

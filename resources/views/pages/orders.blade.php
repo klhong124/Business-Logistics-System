@@ -88,7 +88,8 @@
                         "className": "text-center",
                         "orderable": false, "targets": [1, 3, 6],
                     }
-                ]
+                ],
+                "scrollX": true
             });
         } );
     </script>
