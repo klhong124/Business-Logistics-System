@@ -36,8 +36,11 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
+Route::get('/service', 'BaseController@service');
 
+Route::get('/help', 'BaseController@help');
 
+Route::get('/about-us', 'BaseController@aboutUs');
 
 // auth
 Auth::routes();

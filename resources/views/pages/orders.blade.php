@@ -86,7 +86,7 @@
                 'columnDefs': [
                     {
                         "className": "text-center",
-                        "orderable": false, "targets": [1, 3, 6],
+                        "orderable": false, "targets": [1, 3, 5, 6],
                     }
                 ],
                 "scrollX": true

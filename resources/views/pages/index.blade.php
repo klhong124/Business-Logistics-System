@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>CC Express</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -68,8 +68,8 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/dashboard') }}">Dashboard</a>
-                        <a href="{{ url('/logout') }}"> logout </a>
+                        <a href="{{ url('/') }}/dashboard">Dashboard</a>
+                        <a href="{{ url('/') }}/logout"> logout </a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
@@ -90,9 +90,9 @@
                     <a href="#">Laracasts</a>
                     <a href="#">News</a>
                     <a href="#">Blog</a> -->
-                    <a href="#">Services</a>
-                    <a href="#">Help Center</a>
-                    <a href="#">About Us</a>
+                    <a href="{{ url('/') }}/service">Services</a>
+                    <a href="{{ url('/') }}/help">Help Center</a>
+                    <a href="{{ url('/') }}/about-us">About Us</a>
                 </div>
             </div>
         </div>

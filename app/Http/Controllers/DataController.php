@@ -88,6 +88,8 @@ class DataController extends Controller
 		if(Auth::Check()){
 			if (empty($_POST['oldPassword'])){
 				Session::flash('message', 'Please input you correct password!');
+			}else {
+				
 			}
 		}
 		return View::make('pages/change-password');
