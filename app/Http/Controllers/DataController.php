@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Routing\Redirector;
+use Hash;
+use App\User;
 
 class DataController extends Controller
 {
@@ -19,6 +21,7 @@ class DataController extends Controller
 		return View::make('pages/index');
 	}
 
+	// orders
 	public function orders() {
 		$retailers = DB::table('retailer')
 			->select('id', 'retailer_name')
@@ -26,6 +29,12 @@ class DataController extends Controller
 		// echo '<pre>'.print_r($retailers, 1).'</pre>';
 		return View::make('pages/orders')->with(array('retailers' => $retailers));
 	}
+
+	// saved
+	public function orderPost() {
+		echo '<pre>'.print_r($_POST, 1).'</pre>';
+	}
+
 	// order details
 	public function details() {
 		$order_details = DB::table('order_details')
@@ -86,7 +95,7 @@ class DataController extends Controller
 		DB::table('users')
 			->where('id', $user_id)
 			->update(['name' => $_POST['username']]);
-			
+
 		return redirect()->back();
 	}
 	// change password
@@ -97,10 +106,30 @@ class DataController extends Controller
 	// reset password (not yet done)
 	public function resetPassword(Request $request){
 		if(Auth::Check()){
-			if (empty($_POST['oldPassword'])){
+			$current_password = Auth::user()->password;
+
+			if (empty($_POST['oldPassword'])) {
 				Session::flash('message', 'Please input you correct password!');
-			}else {
-				
+			} elseif (empty($_POST['newPasswordA'])) {
+				Session::flash('message', 'New password cannot be empty!');
+			} elseif (empty($_POST['newPasswordB'])) {
+				Session::flash('message', 'Confirm password cannot be empty!');
+			} elseif (strlen($_POST['newPasswordA']) < 6) {
+				Session::flash('message', 'New password must contain at least 6 characters');
+			} elseif (strlen($_POST['newPasswordB']) < 6) {
+				Session::flash('message', 'Confirm password must contain at least 6 characters');
+			} elseif ($_POST['newPasswordA'] != $_POST['newPasswordB']) {
+				Session::flash('message', 'New password and confirm password must be the same!');
+			} elseif (!(Hash::check($_POST['oldPassword'], $current_password))) {
+				Session::flash('message', 'Old password incorrect!');
+			} elseif (Hash::check($_POST['newPasswordA'], $current_password)) {
+				Session::flash('message', 'New password cannot be same as old password!');
+			} else {
+				$user_id = Auth::User()->id;
+				$obj_user = User::find($user_id);
+				$obj_user->password = Hash::make($_POST['newPasswordB']);
+				$obj_user->save();
+				Session::flash('success', 'Change password successful!');
 			}
 		}
 		return View::make('pages/change-password');

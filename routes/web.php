@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function(){
     	// main activities
         Route::get('/orders', 'DataController@orders');
+        Route::post('/order-post', 'DataController@orderPost');
         Route::get('/order-details', 'DataController@details');
 
         // Account

@@ -23,6 +23,12 @@
                 <p>{{ Session::get('message') }}</p>
         </div>
       @endif
+      @if(Session::has('success'))
+       <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <p>{{ Session::get('success') }}</p>
+        </div>
+      @endif
 
       <!--------------------------
         | Your Page Content Here |
