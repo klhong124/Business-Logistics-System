@@ -50,4 +50,15 @@ class BaseController extends Controller
 
 		return View::make('pages/about-us')->with(array('page_name' => $page_name));
 	}
+
+
+	public function test() {
+		$str = ['a' => "abcdefg"];
+		$str_json = json_encode($str);
+
+
+		json_decode($str_json);
+		echo '<pre>'.print_r($str_json, 1).'</pre>';
+		echo '<pre>'.print_r(json_decode($str_json), 1).'</pre>';
+	}
 }

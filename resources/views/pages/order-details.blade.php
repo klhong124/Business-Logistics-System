@@ -30,15 +30,12 @@
                         <!-- The time line -->
                         <ul class="timeline">
 
-
-                            @foreach($order_details as $detail)
-
-                                @if ($detail->arrived_datetime !== null)
+                                @if ($data->arrived_datetime)
 
                                     <!-- timeline time label -->
                                     <li class="time-label">
                                         <span class="bg-red">
-                                            {{date("d M.Y",strtotime($detail->arrived_datetime))}}
+                                            {{date("d M.Y",strtotime($data->arrived_datetime))}}
                                         </span>
                                     </li>
                                     <!-- /.timeline-label -->
@@ -47,16 +44,15 @@
                                         <i class="fa fa-cubes bg-blue"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($detail->arrived_datetime))}}</span>
+                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->arrived_datetime))}}</span>
 
                                             <h3 class="timeline-header">
                                                 <a href="#">Good A</a>
-                                                arrived the
-                                                <a href="#">Warehouse A</a>
+                                                arrived
                                             </h3>
 
                                             <div class="timeline-footer">
-                                                <a class="btn btn-success btn-xs">Received the good</a>
+                                                <a href="{{url('/')}}/admin/confirm-order/{{$data->invoice_id}}" class="{{($data->archived_status == 1) ? 'btn btn-success btn-xs' : 'btn btn-info btn-xs'}}" {{($data->archived_status == 1) ? 'disabled' : ''}} > {{($data->archived_status == 1) ? 'Received the good' : 'Confirm'}} </a>
                                                 <!-- <a class="btn btn-danger btn-xs">Delete</a> -->
                                             </div>
                                         </div>
@@ -64,12 +60,12 @@
                                     <!-- END timeline item -->
                                 @endif
 
-                                @if ($detail->sent_datetime !== null)
+                                @if ($data->sent_datetime !== null)
 
                                     <!-- timeline time label -->
                                     <li class="time-label">
                                         <span class="bg-red">
-                                            {{date("d M.Y",strtotime($detail->sent_datetime))}}
+                                            {{date("d M.Y",strtotime($data->sent_datetime))}}
                                         </span>
                                     </li>
                                     <!-- /.timeline-label -->
@@ -78,15 +74,13 @@
                                         <i class="fa fa-truck bg-yellow"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($detail->sent_datetime))}}</span>
+                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->sent_datetime))}}</span>
 
                                             <h3 class="timeline-header"><a href="#">The retailer</a> sent the good</h3>
                                         </div>
                                     </li>
                                     <!-- END timeline item -->
                                 @endif
-
-                            @endforeach
 
                             <!-- END timeline item -->
                             <li>
@@ -97,6 +91,18 @@
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
+
+                <div>
+                    <h3>Customer Name</h3>
+                    <h3>Contact</h3>
+                    <h3>Description<h3>
+                    <h3>Address</h3>
+
+                    <h3>Proudct Name</h3>
+                    <h3>Description</h3>
+                    <h3>Weight</h3>
+                </div>
+
             </section>
 
     </section>
