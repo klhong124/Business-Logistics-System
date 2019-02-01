@@ -23,23 +23,89 @@ class DataController extends Controller
 
 	// orders
 	public function orders() {
-		$retailers = DB::table('retailer')
-			->select('id', 'retailer_name')
+		$order_details = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
 			->get();
-		// echo '<pre>'.print_r($retailers, 1).'</pre>';
-		return View::make('pages/orders')->with(array('retailers' => $retailers));
+
+		// echo '<pre>'.print_r($order_details, 1).'</pre>';
+		return View::make('pages/orders')->with(array('order_details' => $order_details));
 	}
 
-	// saved
+	// Archived changed
 	public function orderPost() {
-		echo '<pre>'.print_r($_POST, 1).'</pre>';
+		$order_details = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->get();
+
+		$invoice_id = $_POST['invoice_id'];
+		// $archived_status = ($_POST['archived_choice'] == 'Yes') ? "1" : "0";
+
+		if($_POST['archived_choice'] == 'Yes'){
+			DB::table('order_details')
+				->where('invoice_id', $invoice_id)
+				->update([
+					'archived_status' => "1",
+					'updated_at' => NOW()
+				]);
+
+				return back();
+		} else {
+			return View::make('pages/orders')->with(array('order_details' => $order_details));
+		}
+
+		// echo '<pre>'.print_r($datetime_now, 1).'</pre>';
+
+	}
+
+	public function confirmOrder($invoice_id) {
+		$check = DB::table('order_details')
+			->select('invoice_id')
+			->where('invoice_id', $invoice_id)
+			->where('archived_status', '0')
+			->first();
+
+		// echo '<pre>'.print_r($check, 1).'</pre>';
+
+		if (!empty($check->invoice_id)) {
+			DB::table('order_details')
+			->where('invoice_id', $invoice_id)
+			->update([
+				'archived_status' => "1",
+				'updated_at' => NOW()
+			]);
+		}
+
+		return back();
+
+		// print_r($invoice_id);
 	}
 
 	// order details
-	public function details() {
+	public function details($invoice_id) {
 		$order_details = DB::table('order_details')
-			->select('id', 'warehouse', 'sent_datetime', 'arrived_datetime', 'received_datetime')
+			->select('invoice_id', 'warehouse', 'sent_datetime', 'arrived_datetime', 'received_datetime', 'archived_status')
 			->get();
+
+		$data = DB::table('order_details')
+			->select('order_details.*', 'dummy_2.*')
+			->join('dummy_2', 'dummy_2.invoice_id', 'order_details.invoice_id')
+			->where('order_details.invoice_id', $invoice_id)
+			->first();
+
+		$product_list_str = json_decode($data->product_list);
+		$customer_info_str = json_decode($data->customer_info);
+
+
+		echo '<pre>'.print_r($product_list_str, 1).'</pre>';
+
+		return View::make('pages/order-details')->with(array(
+			'order_details' => $order_details,
+			'product_list_str' => $product_list_str,
+			'customer_info_str' => $customer_info_str,
+			'data' => $data
+		));
 
 			// if ($order_details[0]->sent_datetime !== null) {
 			// 	$sent_datetime = strtotime( $order_details[0]->sent_datetime );
@@ -75,9 +141,7 @@ class DataController extends Controller
 			// echo $received_date;
 
 
-		return View::make('pages/order-details')->with(array(
-			'order_details' => $order_details,
-		));
+
 	}
 	// profile
 	public function profile() {
@@ -140,7 +204,7 @@ class DataController extends Controller
 		$data = DB::table('retailer')
 			->select('retailer.id', 'retailer_name', 'retailer.url', 'retailer.description' , 'users.created_at')
 			->join('users', 'users.id', '=', 'retailer.user_id')
-			->where('retailer.id', $id)
+			->where('retailer.retailer_id', $id)
 			->first();
 			// echo '<pre>'.print_r($data, 1).'</pre>';
 		return View::make('pages/retailer')->with(array('data' => $data));

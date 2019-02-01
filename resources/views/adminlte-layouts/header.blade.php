@@ -113,7 +113,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{url('/')}}/admin/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{url('/')}}/admin/profile" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <!-- <a href="#" class="btn btn-default btn-flat">Sign out</a> -->

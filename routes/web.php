@@ -25,7 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
     	// main activities
         Route::get('/orders', 'DataController@orders');
         Route::post('/order-post', 'DataController@orderPost');
-        Route::get('/order-details', 'DataController@details');
+        Route::get('/order-details/{invoice_id}', 'DataController@details');
+        Route::get('/confirm-order/{invoice_id}', 'DataController@confirmOrder');
 
         // Account
         Route::get('/profile', 'DataController@profile');
@@ -36,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/post-retailer-info', 'DataController@postRetailerInfo');
     });
 });
+
+Route::get('/test', 'BaseController@test');
 
 
 Route::get('/service', 'BaseController@service');
