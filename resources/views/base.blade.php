@@ -19,7 +19,7 @@
 	@yield('content')
 
 	<div class="container">
-		<!-- @yield('content') -->
+			@yield('main-content')
 	</div>
 </body>
 @include('base-footer')

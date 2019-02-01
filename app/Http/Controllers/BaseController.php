@@ -29,6 +29,22 @@ class BaseController extends Controller
 		return View::make('pages/help')->with(array('page_name' => $page_name));
 	}
 
+	public function query() {
+		// echo '<pre>'.print_r($_GET, 1).'</pre>';
+		$page_name = 'Help';
+		$keyword = $_GET['q'];
+
+		$result = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->where('invoice_id', $keyword)
+			->first();
+
+
+		// echo '<pre>'.print_r($result, 1).'</pre>';
+		return View::make('pages/help')->with(array('result' => $result, 'page_name' => $page_name));
+	}
+
 	public function aboutUs() {
 		$page_name = 'About Us';
 

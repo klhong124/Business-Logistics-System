@@ -168,4 +168,20 @@ class DataController extends Controller
 			return redirect::back();
 		}
 	}
+	public function query() {
+		$keyword = $_GET['q'];
+		// echo '<pre>'.print_r($keyword, 1).'</pre>';
+		$order_details = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->where('invoice_id', $keyword)
+			->get();
+		echo '<pre>'.print_r($order_details, 1).'</pre>';
+		// return View::make('pages/orders')->with(array('order_details' => $order_details));
+
+		// $result = DB::table('retailer')
+		// 	->where('retailer_name', 'like',  $keyword)
+		// 	->select('retailer_name')
+		// 	->get();
+	}
 }

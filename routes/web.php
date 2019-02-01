@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/orders', 'DataController@orders');
         Route::post('/order-post', 'DataController@orderPost');
         Route::get('/order-details', 'DataController@details');
+        Route::get('/query', 'DataController@query');
 
         // Account
         Route::get('/profile', 'DataController@profile');
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/service', 'BaseController@service');
 
 Route::get('/help', 'BaseController@help');
-
+Route::get('/query', 'BaseController@query');
 Route::get('/about-us', 'BaseController@aboutUs');
 
 // auth

@@ -149,7 +149,7 @@ desired effect
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+      <form method="GET" action="{{url('/')}}/admin/query" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Invoice Search...">
           <span class="input-group-btn">
