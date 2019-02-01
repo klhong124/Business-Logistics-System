@@ -240,8 +240,8 @@ class DataController extends Controller
 			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
 			->where('invoice_id', $keyword)
 			->get();
-		echo '<pre>'.print_r($order_details, 1).'</pre>';
-		// return View::make('pages/orders')->with(array('order_details' => $order_details));
+		// echo '<pre>'.print_r($order_details, 1).'</pre>';
+		return View::make('pages/orders')->with(array('order_details' => $order_details));
 
 		// $result = DB::table('retailer')
 		// 	->where('retailer_name', 'like',  $keyword)

@@ -20,10 +20,10 @@
           <thead>
             <tr>
               <th>Invoice #</th>
-              <th>Source</th>
+              <th>Delivered From</th>
               <th>Order Time</th>
               <th>Details</th>
-              <th>Update At</th>
+              <th>Last Update</th>
               <th>Received</th>
             </tr>
           </thead>
@@ -32,9 +32,9 @@
               <th>{{$result->invoice_id}}</th>
               <td>{{$result->retailer_name}}</td>
               <td>{{$result->received_datetime}}</td>
-              <td><a href="{{url('/')}}/admin/order-details/{{$result->invoice_id}}">View</a></td>
+              <td><a href="{{url('/')}}/admin/orders">View</a></td>
               <td>{{$result->updated_at}}</td>
-              <td>{{$result->archived_status}}</td>
+              <td>{{($result->archived_status == 0) ? 'Not Yet Received' : 'Received'}}</td>
             </tr>
           </tbody>
         </table>
