@@ -93,7 +93,14 @@
                 <!-- /.row -->
 
                 <div>
+                    <h3>{{$customer_info_str}}</h3>
                     <h3>Customer Name</h3>
+
+
+
+
+
+
                     <h3>Contact</h3>
                     <h3>Description<h3>
                     <h3>Address</h3>

@@ -94,17 +94,17 @@ class DataController extends Controller
 			->where('order_details.invoice_id', $invoice_id)
 			->first();
 
-		$product_list_str = json_decode($data->product_list);
-		$customer_info_str = json_decode($data->customer_info);
+		// $product_list_str = json_decode(str_replace("'", '"',$data->product_list));
+		$customer_info_str = json_decode(str_replace("'", '"',$data->customer_info));
 
-
-		echo '<pre>'.print_r($product_list_str, 1).'</pre>';
+		// echo '<pre>'.print_r($product_list_str, 1).'</pre>';
+		echo '<pre>'.print_r($customer_info_str, 1).'</pre>';
 
 		return View::make('pages/order-details')->with(array(
 			'order_details' => $order_details,
-			'product_list_str' => $product_list_str,
-			'customer_info_str' => $customer_info_str,
-			'data' => $data
+			'data' => $data,
+			// 'product_list_str' => $product_list_str,
+			'customer_info_str' => $customer_info_str
 		));
 
 			// if ($order_details[0]->sent_datetime !== null) {
