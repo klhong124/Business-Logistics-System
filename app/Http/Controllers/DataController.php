@@ -94,10 +94,18 @@ class DataController extends Controller
 			->where('order_details.invoice_id', $invoice_id)
 			->first();
 
-		// $product_list_str = json_decode(str_replace("'", '"',$data->product_list));
-		$customer_info_str = json_decode(str_replace("'", '"',$data->customer_info));
+		$product_list_str = json_decode(str_replace("'", '"', $data->product_list));
+		$customer_info_str = json_decode(str_replace("'", '"', $data->customer_info));
 
-		// echo '<pre>'.print_r($product_list_str, 1).'</pre>';
+		// $test = '[{"name": "John Doe",
+		// 	"address": "115 Dell Avenue, Somewhere",
+		// 	"tel": "999-3000",
+		// 	"occupation" : "Clerk"},
+		// 	{"name": "Jane Doe",
+		// 	"address": "19 Some Road, Somecity",
+		// 	"tel": "332-3449",
+		// 	"occupation": "Student"}]';
+		// $temp = json_decode($test);
 		echo '<pre>'.print_r($customer_info_str, 1).'</pre>';
 
 		return View::make('pages/order-details')->with(array(
@@ -206,8 +214,11 @@ class DataController extends Controller
 			->join('users', 'users.id', '=', 'retailer.user_id')
 			->where('retailer.retailer_id', $id)
 			->first();
-			// echo '<pre>'.print_r($data, 1).'</pre>';
-		return View::make('pages/retailer')->with(array('data' => $data));
+		$count = DB::table('order_details')
+			->where('retailer_id', $id)
+			->count('retailer_id');
+			// echo '<pre>'.print_r($count, 1).'</pre>';
+		return View::make('pages/retailer')->with(array('data' => $data, 'count' => $count));
 	}
 
 	public function postRetailerInfo() {
@@ -247,5 +258,15 @@ class DataController extends Controller
 		// 	->where('retailer_name', 'like',  $keyword)
 		// 	->select('retailer_name')
 		// 	->get();
+	}
+
+	public function processing() {
+		$order_details = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->where('order_details.archived_status', "0")
+			->get();
+			// echo '<pre>'.print_r($order_details, 1).'</pre>';
+		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
 	}
 }

@@ -164,6 +164,7 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Main Activities</li>
         <!-- Optionally, you can add icons to the links -->
+        <li class=""><a href="{{url('/')}}/admin/processing-orders"><i class="fa fa-truck"></i> <span>Processing Orders</span></a></li>
         <li class=""><a href="{{url('/')}}/admin/orders"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
         <li class="header">My Account</li>
         <!-- Optionally, you can add icons to the links -->
