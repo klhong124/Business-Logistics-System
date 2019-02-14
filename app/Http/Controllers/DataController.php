@@ -266,7 +266,7 @@ class DataController extends Controller
 			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
 			->where('order_details.archived_status', "0")
 			->get();
-			echo '<pre>'.print_r($order_details, 1).'</pre>';
+			// echo '<pre>'.print_r($order_details, 1).'</pre>';
 		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
 	}
 }
