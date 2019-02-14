@@ -23,6 +23,7 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function(){
     	// main activities
+        Route::get('/processing-orders', 'DataController@processing');
         Route::get('/orders', 'DataController@orders');
         Route::post('/order-post', 'DataController@orderPost');
         Route::get('/order-details/{invoice_id}', 'DataController@details');

@@ -214,8 +214,11 @@ class DataController extends Controller
 			->join('users', 'users.id', '=', 'retailer.user_id')
 			->where('retailer.retailer_id', $id)
 			->first();
-			// echo '<pre>'.print_r($data, 1).'</pre>';
-		return View::make('pages/retailer')->with(array('data' => $data));
+		$count = DB::table('order_details')
+			->where('retailer_id', $id)
+			->count('retailer_id');
+			// echo '<pre>'.print_r($count, 1).'</pre>';
+		return View::make('pages/retailer')->with(array('data' => $data, 'count' => $count));
 	}
 
 	public function postRetailerInfo() {
@@ -255,5 +258,15 @@ class DataController extends Controller
 		// 	->where('retailer_name', 'like',  $keyword)
 		// 	->select('retailer_name')
 		// 	->get();
+	}
+
+	public function processing() {
+		$order_details = DB::table('order_details')
+			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
+			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->where('order_details.archived_status', "0")
+			->get();
+			echo '<pre>'.print_r($order_details, 1).'</pre>';
+		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
 	}
 }
