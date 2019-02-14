@@ -106,12 +106,14 @@ class DataController extends Controller
 		// 	"tel": "332-3449",
 		// 	"occupation": "Student"}]';
 		// $temp = json_decode($test);
-		echo '<pre>'.print_r($customer_info_str, 1).'</pre>';
+
+		// echo '<pre>'.print_r($customer_info_str, 1).'</pre>';
+		// echo '<pre>'.print_r($product_list_str, 1).'</pre>';
 
 		return View::make('pages/order-details')->with(array(
 			'order_details' => $order_details,
 			'data' => $data,
-			// 'product_list_str' => $product_list_str,
+			'product_list_str' => $product_list_str,
 			'customer_info_str' => $customer_info_str
 		));
 

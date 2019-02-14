@@ -47,8 +47,7 @@
                                             <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->arrived_datetime))}}</span>
 
                                             <h3 class="timeline-header">
-                                                <a href="#">Good A</a>
-                                                arrived
+                                                Goods arrived
                                             </h3>
 
                                             <div class="timeline-footer">
@@ -76,7 +75,7 @@
                                         <div class="timeline-item">
                                             <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->sent_datetime))}}</span>
 
-                                            <h3 class="timeline-header"><a href="#">The retailer</a> sent the good</h3>
+                                            <h3 class="timeline-header">{{$data->warehouse}} sent the goods</h3>
                                         </div>
                                     </li>
                                     <!-- END timeline item -->
@@ -93,21 +92,71 @@
                 <!-- /.row -->
 
                 <div>
-                    <h3>{{$customer_info_str}}</h3>
-                    <h3>Customer Name</h3>
+                    <br>
+                    <div class="box box-solid box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Customer Information</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 50%">Customer Name</th>
+                                        <td>{{$customer_info_str->customer_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Contact</th>
+                                        <td>{{$customer_info_str->contact}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Description</th>
+                                        <td>{{$customer_info_str->description}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{$customer_info_str->address}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="row">
+                        @foreach ($product_list_str as $key => $product)
+                            <div class="col-md-6">
+                                <div class="box box-solid box-info">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Product Information</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width: 50%">Proudct Name</th>
+                                                    <td>{{$product->product_name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <td>{{$product->description}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Quantity</th>
+                                                    <td>{{$product->qty}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Net Weight</th>
+                                                    <td>{{$product->weight}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
 
-
-
-
-
-
-                    <h3>Contact</h3>
-                    <h3>Description<h3>
-                    <h3>Address</h3>
-
-                    <h3>Proudct Name</h3>
-                    <h3>Description</h3>
-                    <h3>Weight</h3>
                 </div>
 
             </section>
