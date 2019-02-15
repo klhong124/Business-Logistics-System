@@ -55,45 +55,69 @@
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
+            }
+            .link > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
                 text-transform: uppercase;
             }
 
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .popupbox{
+                bottom:0;
+                position:absolute;
+            }
+            .box{
+                padding: 50px;
+                outline: red solid 5px;
+            }
+            #trackbth{
+                color:white;
+                background:red;
+                padding:5px;
+            }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+        <div class="top-right links">
+        <a href="{{ url('/') }}/dashboard">Services</a>
+        <a href="{{ url('/') }}/dashboard">Help Center</a>
+        <a href="{{ url('/') }}/about-us">About Us</a>
             @if (Route::has('login'))
-                <div class="top-right links">
                     @auth
                         <a href="{{ url('/') }}/dashboard">Dashboard</a>
                         <a href="{{ url('/') }}/logout"> logout </a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
                         @endif
                     @endauth
-                </div>
             @endif
-
+            </div>
             <div class="content">
                 <div class="title m-b-md">
                     曹操速遞
                 </div>
-
-                <div class="links">
-                    <!-- <a href="#">Docs</a>
-                    <a href="#">Laracasts</a>
-                    <a href="#">News</a>
-                    <a href="#">Blog</a> -->
-                    <a href="{{ url('/') }}/service">Services</a>
-                    <a href="{{ url('/') }}/help">Help Center</a>
-                    <a href="{{ url('/') }}/about-us">About Us</a>
+                <div class="link">
+                    <a href="{{ url('/') }}/service">Track & Trace</a>
+                    <a href="{{ url('/') }}/help">Shipping</a>
                 </div>
+            </div>
+
+            <div class="popupbox">
+                <form class="box" action="/.php">
+                            Enter your waybill number:<br>
+                            <input type="text" name="order">
+                            <input type="submit" value="Track" id="trackbth">
+                </form> 
             </div>
         </div>
     </body>
