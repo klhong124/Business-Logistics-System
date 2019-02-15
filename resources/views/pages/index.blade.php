@@ -70,6 +70,7 @@
                 margin-bottom: 30px;
             }
             .popupbox{
+                left:0;
                 bottom:0;
                 position:absolute;
             }
