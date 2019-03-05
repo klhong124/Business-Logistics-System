@@ -48,24 +48,24 @@
                                         <input hidden name="invoice_id" value="{{$order->invoice_id}}">
                                     </td>
                                     <td>
-                                        <a href="{{url('/')}}/admin/retailer/{{$order->retailer_id}}">
-                                            <button type="button" class="btn btn-block btn-sm btn-link">{{$order->retailer_name}}</button>
+                                        <a href="{{url('/')}}/admin/retailer/{{$order->shipper_id}}">
+                                            <button type="button" class="btn btn-block btn-sm btn-link">{{$order->name}}</button>
                                         </a>
                                     </td>
-                                    <td>{{$order->received_datetime}}</td>
+                                    <td>{{$order->order_time}}</td>
                                     <td><a href="{{url('/')}}/admin/order-details/{{$order->invoice_id}}"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
-                                    <td>{{$order->updated_at}}</td>
+                                    <td>{{$order->update_time}}</td>
 
                                         <td class="archived-td">
                                             <div class="form-group">
                                                 <select class="form-control form-control-sm" name="archived_choice" disabled>
-                                                    <option {{($order->archived_status == 1) ? 'selected' : ''}}>Yes</option>
-                                                    <option {{($order->archived_status == 0) ? 'selected' : ''}}>No</option>
+                                                    <option {{($order->complete_time != null) ? 'selected' : ''}}>Yes</option>
+                                                    <option {{($order->complete_time == null) ? 'selected' : ''}}>No</option>
                                                 </select>
                                             </div>
                                         </td>
                                         <td class="btn-group-td">
-                                            <button type="button" class="btn btn-block btn-sm btn-primary edit-btn" {{($order->archived_status == 1) ? 'disabled' : ''}}>Edit</button>
+                                            <button type="button" class="btn btn-block btn-sm btn-primary edit-btn" {{($order->complete_time != null) ? 'disabled' : ''}}>Edit</button>
                                             <button type="submit" class="btn btn-block btn-sm btn-primary hide save-btn">Save</button>
                                             <button type="button" class="btn btn-block btn-sm btn-primary hide cancel-btn">Cancel</button>
                                         </td>

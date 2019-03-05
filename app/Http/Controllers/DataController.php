@@ -23,9 +23,11 @@ class DataController extends Controller
 
 	// orders
 	public function orders() {
-		$order_details = DB::table('order_details')
-			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
-			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+		$order_details = DB::table('invoice_process')
+			->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+			->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+			->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
 			->get();
 
 		// echo '<pre>'.print_r($order_details, 1).'</pre>';
@@ -34,23 +36,24 @@ class DataController extends Controller
 
 	// Archived changed
 	public function orderPost() {
-		$order_details = DB::table('order_details')
-			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
-			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+		$order_details = DB::table('invoice_process')
+			->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+			->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*')
 			->get();
 
 		$invoice_id = $_POST['invoice_id'];
 		// $archived_status = ($_POST['archived_choice'] == 'Yes') ? "1" : "0";
 
 		if($_POST['archived_choice'] == 'Yes'){
-			DB::table('order_details')
+			DB::table('invoice_process')
 				->where('invoice_id', $invoice_id)
 				->update([
-					'archived_status' => "1",
-					'updated_at' => NOW()
+					'complete_time' => NOW(),
+					'update_time' => NOW()
 				]);
 
-				return back();
+			return back();
 		} else {
 			return View::make('pages/orders')->with(array('order_details' => $order_details));
 		}
@@ -60,20 +63,20 @@ class DataController extends Controller
 	}
 
 	public function confirmOrder($invoice_id) {
-		$check = DB::table('order_details')
+		$check = DB::table('invoice_process')
 			->select('invoice_id')
 			->where('invoice_id', $invoice_id)
-			->where('archived_status', '0')
+			->where('archived_status', NULL)
 			->first();
 
 		// echo '<pre>'.print_r($check, 1).'</pre>';
 
 		if (!empty($check->invoice_id)) {
-			DB::table('order_details')
+			DB::table('invoice_process')
 			->where('invoice_id', $invoice_id)
 			->update([
-				'archived_status' => "1",
-				'updated_at' => NOW()
+				'complete_time' => NOW(),
+				'update_time' => NOW()
 			]);
 		}
 
@@ -211,32 +214,39 @@ class DataController extends Controller
 	}
 
 	public function viewRetailer($id) {
-		$data = DB::table('retailer')
-			->select('retailer.id', 'retailer_name', 'retailer.url', 'retailer.description' , 'users.created_at')
-			->join('users', 'users.id', '=', 'retailer.user_id')
-			->where('retailer.retailer_id', $id)
+		$data = DB::table('invoice_table')
+			// ->select('retailer.id', 'retailer_name', 'retailer.url', 'retailer.description' , 'users.created_at')
+			->join('users_detail', 'users_detail.id', '=', 'invoice_table.shipper_id')
+			->join('users', 'users.id', '=', 'invoice_table.shipper_id')
+			->where('users_detail.id', $id)
 			->first();
-		$count = DB::table('order_details')
-			->where('retailer_id', $id)
-			->count('retailer_id');
-			// echo '<pre>'.print_r($count, 1).'</pre>';
+		$count = DB::table('invoice_table')
+			->where('shipper_id', $id)
+			->count('shipper_id');
+			// echo '<pre>'.print_r($data, 1).'</pre>';
 		return View::make('pages/retailer')->with(array('data' => $data, 'count' => $count));
 	}
 
 	public function postRetailerInfo() {
 		if (!empty( $_POST['retailer_name'])) {
-			$retailer_name = $_POST['retailer_name'];
+			$name = $_POST['retailer_name'];
 			$description = $_POST['description'];
 			$url = $_POST['url'];
 			$id = $_POST['id'];
 
-			DB::table('retailer')
+			DB::table('users_detail')
 				->where('id', $id)
 				->update([
-					'retailer_name'=>$retailer_name,
 					'description'=>$description,
 					'url'=>$url
 				]);
+
+			DB::table('users')
+				->where('id', $id)
+				->update([
+					'name'=>$name
+				]);
+			
 
 			Session::flash('message', "Update successful!");
 			return redirect()->back();
@@ -248,13 +258,14 @@ class DataController extends Controller
 	public function query() {
 		$keyword = $_GET['q'];
 		// echo '<pre>'.print_r($keyword, 1).'</pre>';
-		$order_details = DB::table('order_details')
-			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
-			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
-			->where('invoice_id', $keyword)
+		$result = DB::table('invoice_process')
+			->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+			->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*')
+			->where('invoice_process.invoice_id', $keyword)
 			->get();
 		// echo '<pre>'.print_r($order_details, 1).'</pre>';
-		return View::make('pages/orders')->with(array('order_details' => $order_details));
+		return View::make('pages/orders')->with(array('order_details' => $result));
 
 		// $result = DB::table('retailer')
 		// 	->where('retailer_name', 'like',  $keyword)
@@ -263,12 +274,31 @@ class DataController extends Controller
 	}
 
 	public function processing() {
-		$order_details = DB::table('order_details')
-			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
-			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
-			->where('order_details.archived_status', "0")
+		$order_details = DB::table('invoice_process')
+			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+			->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+			->select('invoice_process.invoice_id', 'invoice_table.shipper_id', 'users.name', 'pickup_time','order_time', 'update_time', 'complete_time')
+			->where('invoice_process.complete_time', null)
 			->get();
 			// echo '<pre>'.print_r($order_details, 1).'</pre>';
 		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
+	}
+	// archived_status
+
+	public function csv_reader() {
+		// upload a file in some whrere
+
+		//exec('C:\Users\Hong\GitHub\csv_reader\csv_reader.bat');
+
+		//return View::make('pages/orders')->with(array('order_details' => $order_details));
+	}
+
+	public function complete_invoice($invoice_id) {
+		$order_details = DB::table('invoice_process')
+			->where('invoice_id', $invoice_id)
+			->update([
+				'complete_time' => NOW()
+				]);
+		return back();
 	}
 }

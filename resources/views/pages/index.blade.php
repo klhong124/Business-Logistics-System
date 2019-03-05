@@ -88,8 +88,8 @@
     <body>
         <div class="flex-center position-ref full-height">
         <div class="top-right links">
-        <a href="{{ url('/') }}/dashboard">Services</a>
-        <a href="{{ url('/') }}/dashboard">Help Center</a>
+        <a href="{{ url('/') }}/service">Services</a>
+        <a href="{{ url('/') }}/help">Help Center</a>
         <a href="{{ url('/') }}/about-us">About Us</a>
             @if (Route::has('login'))
                     @auth
@@ -105,6 +105,12 @@
             </div>
             <div class="content">
                 <div class="title m-b-md">
+                <?php
+                    echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].'/complete_invoice/60')
+                    ->setSize(8)
+                    ->setMargin(2)
+                    ->svg();
+                ?>
                     曹操速遞
                 </div>
                 <div class="link">
@@ -114,11 +120,16 @@
             </div>
 
             <div class="popupbox">
-                <form class="box" action="/.php">
-                            Enter your waybill number:<br>
-                            <input type="text" name="order">
-                            <input type="submit" value="Track" id="trackbth">
+                <form class="box" action="/query" method="get">
+                    Enter your invoice code: <br>
+                    <input type="text" name="q" placeholder="Invoice Code Search">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                 </form> 
+                <form class="box" action="CSV_Reader.php" method="post" enctype="multipart/form-data">
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Upload Image" name="submit">
+                </form>
             </div>
         </div>
     </body>

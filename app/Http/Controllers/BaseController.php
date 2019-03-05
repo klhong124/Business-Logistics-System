@@ -34,10 +34,10 @@ class BaseController extends Controller
 		$page_name = 'Help';
 		$keyword = $_GET['q'];
 
-		$result = DB::table('order_details')
-			->join('retailer', 'retailer.retailer_id', '=', 'order_details.retailer_id')
-			->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
-			->where('invoice_id', $keyword)
+		$result = DB::table('invoice_process')
+			->join('invoice_detail', 'invoice_process.invoice_id', '=', 'invoice_detail.invoice_id')
+			// ->select('invoice_id', 'retailer.retailer_id', 'retailer_name', 'received_datetime', 'updated_at', 'archived_status')
+			->where('invoice_process.invoice_id', $keyword)
 			->first();
 
 

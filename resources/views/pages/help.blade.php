@@ -20,21 +20,27 @@
           <thead>
             <tr>
               <th>Invoice #</th>
-              <th>Delivered From</th>
               <th>Order Time</th>
-              <th>Details</th>
-              <th>Last Update</th>
-              <th>Received</th>
+              <th>Drop Off Time</th>
+              <th>Pickup Time</th>
+              <th>Update Time</th>
+              <th>Quantity</th>
+              <th>Weight</th>
+              <th>Size</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th>{{$result->invoice_id}}</th>
-              <td>{{$result->retailer_name}}</td>
-              <td>{{$result->received_datetime}}</td>
+              <td>{{$result->order_time}}</td>
+              <td>{{$result->dropoff_time}}</td>
+              <td>{{$result->pickup_time}}</td>
+              <td>{{$result->update_time}}</td>
+              <td>{{$result->quantity}}</td>
+              <td>{{$result->weight}}</td>
+              <td>{{$result->size}}</td>
               <td><a href="{{url('/')}}/admin/orders">View</a></td>
-              <td>{{$result->updated_at}}</td>
-              <td>{{($result->archived_status == 0) ? 'Not Yet Received' : 'Received'}}</td>
             </tr>
           </tbody>
         </table>

@@ -18,7 +18,14 @@
 
 Route::get('/', 'DataController@index');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
-
+Route::get('/complete_invoice/{invoice_id}', 'DataController@complete_invoice');
+Route::get('qr-code/examples/url', function () 
+{
+    return  QRCode::url('http://localhost/complete_invoice/60')
+                  ->setSize(8)
+                  ->setMargin(2)
+                  ->svg();
+});    
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function(){
@@ -37,6 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/reset-password', 'DataController@resetPassword');
         Route::get('/retailer/{id}', 'DataController@viewRetailer');
         Route::post('/post-retailer-info', 'DataController@postRetailerInfo');
+
+        //upload csv file
+        Route::post('/csv_reader', 'DataController@csv_reader');
+
     });
 });
 

@@ -37,17 +37,17 @@
                         <img class="img-circle" src="{{url('/')}}/dist/img/avatar2.png" alt="User Avatar">
                     </div>
                     <!-- /.widget-user-image -->
-                    <a href="#"><h3 class="widget-user-username">{{$data->retailer_name}}</h3></a>
+                    <a href="#"><h3 class="widget-user-username">{{$data->name}}</h3></a>
                     <h5 class="widget-user-desc">Join at: {{$data->created_at}}</h5>
                 </div>
             </div>
             <div class="box-footer">
                 <form action="/admin/post-retailer-info" method="POST">
                     {!! csrf_field() !!}
-                    <input hidden name="id" value="{{$data->id}}">
+                    <input hidden name="id" value="{{$data->shipper_id}}">
                     <div class="form-group" >
                         <label class="desc-text-wrap">Name:</label>
-                        <input type="text" class="form-control" name="retailer_name" value="{{$data->retailer_name}}">
+                        <input type="text" class="form-control" name="retailer_name" value="{{$data->name}}">
                     </div>
                     <div class="form-group">
                         <label class="desc-text-wrap">Description:</label>
