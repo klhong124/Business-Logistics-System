@@ -373,7 +373,7 @@ class DataController extends Controller
 		    }
 		}
 
-		// return back();
+		return back();
 
 		// print_r($invoice_id);
 	}
