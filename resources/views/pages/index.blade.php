@@ -126,7 +126,8 @@
                     <input type="text" name="q" placeholder="Invoice Code Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                 </form> 
-                <form class="box" action="CSV_Reader.php" method="post" enctype="multipart/form-data">
+                <form class="box" action="/uploadCSV" method="post" enctype="multipart/form-data">
+                    @csrf
                     Select image to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
                     <input type="submit" value="Upload Image" name="submit">
