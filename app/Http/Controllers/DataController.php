@@ -283,7 +283,6 @@ class DataController extends Controller
 			// echo '<pre>'.print_r($order_details, 1).'</pre>';
 		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
 	}
-	// archived_status
 
 	public function csv_reader() {
 		// upload a file in some whrere
@@ -300,5 +299,82 @@ class DataController extends Controller
 				'complete_time' => NOW()
 				]);
 		return back();
+	}
+
+	public function uploadCSV() {
+		// echo 'ab';
+		// $datetime = date("Y-m-d h:i:sa", $d);
+		$date = date('Y-m-d H:i:s');
+		// echo strtotime($date);
+		$target_dir = "uploads/";
+		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+		$uploadOk = 1;
+
+		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
+		echo $new_name;
+
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"])) {
+		    // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+		    // if($check !== false) {
+		    //     echo "File is an image - " . $check["mime"] . ".";
+		    //     $uploadOk = 1;
+		    // } else {
+		    //     echo "File is not an image.";
+		    //     $uploadOk = 0;
+		    // }
+		}
+
+		// Check if file already exists
+		// if (file_exists($target_file)) {
+		//     echo "Sorry, file already exists.";
+		//     $uploadOk = 0;
+		// }
+
+		// Get all file names in uploads
+		// $file_names_in_uploads = scandir($target_dir);
+		// $file_count = 1;
+		// $changed_the_name = false;
+		// $new_name = "";
+		// // $new_name = getNewName($file_names_in_uploads, basename($_FILES["fileToUpload"]["name"]), $file_count);
+
+		// foreach ($file_names_in_uploads as &$file_name) {
+		// 	if (in_array(basename($_FILES["fileToUpload"]["name"]).$file_count, $file_names_in_uploads)) {
+		// 		// if ( (basename($_FILES["fileToUpload"]["name"]).$file_count) == $file_name) {
+		// 		//     print_r($file_name . $file_count);
+		// 	    $file_count += 1;
+		// 		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . $file_count . ".csv";
+		// 	// 	$changed_the_name = true;
+		// 	} else {
+		// 		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . $file_count . ".csv";
+		// 	}
+		// }
+		// print_r($new_name);
+
+		// Check file size
+		if ($_FILES["fileToUpload"]["size"] > 500000) {
+		    echo "Sorry, your file is too large.";
+		    $uploadOk = 0;
+		}
+		// Allow certain file formats
+		if($imageFileType != "csv" ) {
+		    echo "Sorry, only csv files are allowed.";
+		    $uploadOk = 0;
+		}
+		if ($uploadOk == 0) {
+		    echo "Sorry, your file was not uploaded.";
+		// if everything is ok, try to upload file
+		} else {
+		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $new_name)) {
+		        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+		    } else {
+		        echo "Sorry, there was an error uploading your file.";
+		    }
+		}
+
+		// return back();
+
+		// print_r($invoice_id);
 	}
 }

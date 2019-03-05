@@ -17,7 +17,10 @@
 
 
 Route::get('/', 'DataController@index');
+Route::post('/uploadCSV', 'DataController@uploadCSV');
+
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
 Route::get('/complete_invoice/{invoice_id}', 'DataController@complete_invoice');
 Route::get('qr-code/examples/url', function () 
 {
