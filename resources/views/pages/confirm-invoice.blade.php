@@ -18,7 +18,7 @@
           <p>Please scan the code below to confirm the order</p>
           <ul class="list-group mb-3">
             <?php
-              echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].'/complete_invoice'.'/'.$data->invoice_id)
+              echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
               // echo QRCode::url('http://ls27.asuscomm.com:8080/complete_invoice/60')
               ->setSize(8)
               ->setMargin(2)

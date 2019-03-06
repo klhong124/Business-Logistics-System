@@ -8,6 +8,7 @@ use View;
 use DB;
 use Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Routing\Redirector;
@@ -357,7 +358,7 @@ class DataController extends Controller
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
 		$new_name = $target_dir . "data" . ".csv";
-		Command::exec('C:/Users/Hong/GitHub/csv_reader/csv_reader.bat');
+		exec("uploads\csv_reader\main.exe");
 		$success_message = "";
 		$error_message = "";
 

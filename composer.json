@@ -13,7 +13,6 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "pastuhov/php-exec-command": "^1.1",
         "werneckbh/laravel-qr-code": "^0.1.3"
     },
     "require-dev": {
