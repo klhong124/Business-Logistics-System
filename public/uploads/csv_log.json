@@ -23,4 +23,8 @@
 {"name": "data.csv", "time": "2019-03-06 21:41:25", "status": "success"},
 {"name": "data.csv", "time": "2019-03-06 21:42:25", "status": "success"},
 {"name": "data.csv", "time": "2019-03-06 21:42:53", "status": "shipper_email"},
-{"name": "data.csv", "time": "2019-03-06 21:42:57", "status": "shipper_email"}]
+{"name": "data.csv", "time": "2019-03-06 21:42:57", "status": "shipper_email"},
+{"name": "data.csv", "time": "2019-03-06 21:47:32", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 21:48:08", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 21:48:13", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 21:48:32", "status": "success"}]

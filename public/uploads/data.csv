@@ -1,2 +1,4 @@
-quantity,receiver name,receiver address,receiver contact,shipper_name
-8,Marco,Mong kok,(852) 62345671,James
+"shipper_name","shipper_email","quantity","weight","receiver_name","receiver_address","receiver_contact"
+"KENNY LTD","KB@www","33","50kg","ALVIN","Cityu SCOPE LI-4302","(852) 2180 0000"
+"EDMOND","SB@www","88","88kg","YIN","Tsim Sha Tsui SCOPE CP3LT1","999"
+"Cheeper","0N9@www","87","87kg","COW","Tsim Sha Tsui SCOPE L1-2301","911"
