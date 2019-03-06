@@ -392,8 +392,11 @@ class DataController extends Controller
 			// check_csv_log();
 		}
 
-		
-		exec("uploads\csv_reader_API\main.exe");
+
+		#Desktop
+		exec("D:\GitHub\csv_reader\main.py");
+		#surfaceBook
+		#exec("uploads\csv_reader_API\main.exe");
 
 		// read python log
 		$strJsonFileContents = file_get_contents(public_path() . "/uploads/csv_log.json");
