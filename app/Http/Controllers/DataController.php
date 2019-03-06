@@ -358,7 +358,8 @@ class DataController extends Controller
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
 		$new_name = $target_dir . "data" . ".csv";
-		exec("uploads\csv_reader_API\main.exe");
+
+		// unlink($new_name);
 
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -390,6 +391,9 @@ class DataController extends Controller
 			$success_message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded as ".basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
 			// check_csv_log();
 		}
+
+		
+		exec("uploads\csv_reader_API\main.exe");
 
 		// read python log
 		$strJsonFileContents = file_get_contents(public_path() . "/uploads/csv_log.json");
