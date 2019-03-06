@@ -356,9 +356,8 @@ class DataController extends Controller
 		$target_dir = "uploads/";
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
-
-		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
-		
+		$new_name = $target_dir . "data" . ".csv";
+		Command::exec('C:/Users/Hong/GitHub/csv_reader/csv_reader.bat');
 		$success_message = "";
 		$error_message = "";
 
@@ -427,9 +426,7 @@ class DataController extends Controller
 		// $error_message = '';
 		$page_name = 'Upload A CSV';
 		if ($uploadOk) {
-			
 			$success_message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded as ".basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
-
 			// check_csv_log();
 		}
 

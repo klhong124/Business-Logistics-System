@@ -1,0 +1,11 @@
+[
+{"name": "csv_init", "time": "2000-01-01 00:00:00", "status": "init_success"},
+{"name": "test.output.csv", "time": "2019-03-06 19:02:27", "status": "csv format"},
+{"name": "Customer.csv", "time": "2019-03-06 19:02:42", "status": "csv format"},
+{"name": "test.output.csv", "time": "2019-03-06 19:02:51", "status": "csv format"},
+{"name": "test.output.csv", "time": "2019-03-06 19:02:52", "status": "csv format"},
+{"name": "test.output.csv", "time": "2019-03-06 19:03:51", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 19:24:45", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 19:25:04", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 19:25:55", "status": "success"},
+{"name": "data.csv", "time": "2019-03-06 19:29:44", "status": "success"}]

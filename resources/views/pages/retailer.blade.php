@@ -47,17 +47,17 @@
                     <input hidden name="id" value="{{$data->shipper_id}}">
                     <div class="form-group" >
                         <label class="desc-text-wrap">Name:</label>
-                        <input type="text" class="form-control" name="retailer_name" value="{{$data->name}}">
+                        <input type="text" class="form-control" name="retailer_name" value="{{$data->name}}" {{(Auth::user()->role == '0' || Auth::user()->id == $data->shipper_id) ? '' : 'disabled'}}>
                     </div>
                     <div class="form-group">
                         <label class="desc-text-wrap">Description:</label>
-                        <textarea class="form-control" rows="5" name="description">{{$data->description}}</textarea>
+                        <textarea class="form-control" rows="5" name="description" {{(Auth::user()->role == '0' || Auth::user()->id == $data->shipper_id) ? '' : 'disabled'}}>{{$data->description}}</textarea>
                     </div>
                     <div class="form-group">
                         <label class="desc-text-wrap">Website:</label>
-                        <input type="text" class="form-control" name="url" value="{{$data->url}}">
+                        <input type="text" class="form-control" name="url" value="{{$data->url}}" {{(Auth::user()->role == '0' || Auth::user()->id == $data->shipper_id) ? '' : 'disabled'}}>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" style="display: {{(Auth::user()->role == '0' || Auth::user()->id == $data->shipper_id) ? '' : 'none'}}")>Save</button>
                 </form>
             </div>
             <!-- /.widget-user -->
