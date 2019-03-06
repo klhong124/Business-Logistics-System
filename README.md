@@ -5,4 +5,3 @@ A Business Logistics System provides online order service and goods tracking.
 #installation
 1. composer install
 2. composer require werneckbh/laravel-qr-code
-3. composer require pastuhov/php-exec-command
