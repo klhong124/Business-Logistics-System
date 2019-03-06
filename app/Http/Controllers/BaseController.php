@@ -61,4 +61,20 @@ class BaseController extends Controller
 		echo '<pre>'.print_r($str_json, 1).'</pre>';
 		echo '<pre>'.print_r(json_decode($str_json), 1).'</pre>';
 	}
+
+
+	public function confirmInvoice($invoice_id) {
+		$page_name = 'Confirm Invoice';
+		$data = DB::table('invoice_table')
+			->join('invoice_receiver', 'invoice_receiver.invoice_id', 'invoice_table.invoice_id')
+			->join('invoice_process', 'invoice_process.invoice_id', 'invoice_table.invoice_id')
+			->join('invoice_detail', 'invoice_detail.invoice_id', 'invoice_table.invoice_id')
+			->join('users', 'users.id', 'invoice_table.shipper_id')
+			->join('users_detail', 'users_detail.id', 'invoice_table.shipper_id')
+			->where('invoice_table.invoice_id', $invoice_id)
+			->first();
+
+		// echo '<pre>'.print_r($data, 1).'</pre>';
+		return View::make('pages/confirm-invoice')->with(array('page_name' => $page_name, 'data' => $data));
+	}
 }

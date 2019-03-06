@@ -9,6 +9,9 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html, body {
@@ -69,19 +72,26 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
             .popupbox{
                 left:0;
                 bottom:0;
                 position:absolute;
+                max-width: 100%;
+                max-height: 100%;
             }
+
             .box{
                 padding: 50px;
                 outline: red solid 5px;
             }
-            #trackbth{
-                color:white;
-                background:red;
-                padding:5px;
+
+            /*  Small devices (landscape phones, more than 576px) */
+            @media (max-width: 576px) { 
+                .box{
+                    padding: 15px;
+                    outline: red solid 2px;
+                }
             }
         </style>
     </head>
@@ -106,13 +116,6 @@
             </div>
             <div class="content">
                 <div class="title m-b-md">
-                <?php
-                    //echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].'/complete_invoice/60')
-                    echo QRCode::url('http://ls27.asuscomm.com:8080/complete_invoice/60')
-                    ->setSize(8)
-                    ->setMargin(2)
-                    ->svg();
-                ?>
                     曹操速遞
                 </div>
                 <div class="link">
@@ -120,12 +123,13 @@
                     <a href="{{ url('/') }}/help">Shipping</a>
                 </div>
             </div>
-
             <div class="popupbox">
                 <form class="box" action="/query" method="get">
                     Enter your invoice code: <br>
-                    <input type="text" name="q" placeholder="Invoice Code Search">
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="Invoice Code Search">
+                        <button type="button" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                    </div>
                 </form> 
                 <!-- <form class="box" action="/uploadCSV" method="post" enctype="multipart/form-data">
                     @csrf

@@ -13,39 +13,34 @@
   </div>
 @if(!empty($result))
   <div class="d-flex justify-content-center">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Invoice</h5>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Invoice #</th>
-              <th>Order Time</th>
-              <th>Drop Off Time</th>
-              <th>Pickup Time</th>
-              <th>Update Time</th>
-              <th>Quantity</th>
-              <th>Weight</th>
-              <th>Size</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>{{$result->invoice_id}}</th>
-              <td>{{$result->order_time}}</td>
-              <td>{{$result->dropoff_time}}</td>
-              <td>{{$result->pickup_time}}</td>
-              <td>{{$result->update_time}}</td>
-              <td>{{$result->quantity}}</td>
-              <td>{{$result->weight}}</td>
-              <td>{{$result->size}}</td>
-              <td><a href="{{url('/')}}/admin/orders">View</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Invoice #</th>
+            <th>Order Time</th>
+            <th>Drop Off Time</th>
+            <th>Pickup Time</th>
+            <th>Update Time</th>
+            <th>Quantity</th>
+            <th>Weight</th>
+            <th>Size</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>{{$result->invoice_id}}</th>
+            <td>{{$result->order_time}}</td>
+            <td>{{$result->dropoff_time}}</td>
+            <td>{{$result->pickup_time}}</td>
+            <td>{{$result->update_time}}</td>
+            <td>{{$result->quantity}}</td>
+            <td>{{$result->weight}}</td>
+            <td>{{$result->size}}</td>
+            <td><a href="{{url('/')}}/admin/orders">View</a></td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 @endif
 

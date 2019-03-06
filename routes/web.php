@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/test', 'BaseController@test');
 
 
+Route::get('/confirm-invoice/{invoice_id}', 'BaseController@confirmInvoice');
+
 Route::get('/service', 'BaseController@service');
 
 Route::get('/help', 'BaseController@help');
