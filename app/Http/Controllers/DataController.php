@@ -326,7 +326,6 @@ class DataController extends Controller
 	public function csv_reader() {
 		// upload a file in some whrere
 
-		//exec('C:\Users\Hong\GitHub\csv_reader\csv_reader.bat');
 
 		//return View::make('pages/orders')->with(array('order_details' => $order_details));
 	}
@@ -358,7 +357,7 @@ class DataController extends Controller
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
 		$new_name = $target_dir . "data" . ".csv";
-		exec("uploads\csv_reader\main.exe");
+		exec("uploads\csv_reader_API\main.exe");
 		$success_message = "";
 		$error_message = "";
 

@@ -1,2 +1,2 @@
-"4","Bryan","Mong Kok","(852) 67891234"
-"23","James","Lai Chi Kok","(852) 9123123"
+quantity,receiver name,receiver address,receiver contact,shipper_name
+8,Marco,Mong kok,(852) 62345671,James
