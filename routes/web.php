@@ -18,6 +18,7 @@
 
 Route::get('/', 'DataController@index');
 Route::post('/uploadCSV', 'DataController@uploadCSV');
+Route::get('/csv-upload-page', 'DataController@csvUploadPage');
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 

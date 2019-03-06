@@ -30,12 +30,12 @@
                         <!-- The time line -->
                         <ul class="timeline">
 
-                                @if ($data->arrived_datetime)
+                                @if ($invoice_details->pickup_time)
 
                                     <!-- timeline time label -->
                                     <li class="time-label">
                                         <span class="bg-red">
-                                            {{date("d M.Y",strtotime($data->arrived_datetime))}}
+                                            {{date("d M.Y",strtotime($invoice_details->pickup_time))}}
                                         </span>
                                     </li>
                                     <!-- /.timeline-label -->
@@ -44,14 +44,14 @@
                                         <i class="fa fa-cubes bg-blue"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->arrived_datetime))}}</span>
+                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($invoice_details->pickup_time))}}</span>
 
                                             <h3 class="timeline-header">
                                                 Goods arrived
                                             </h3>
 
                                             <div class="timeline-footer">
-                                                <a href="{{url('/')}}/admin/confirm-order/{{$data->invoice_id}}" class="{{($data->archived_status == 1) ? 'btn btn-success btn-xs' : 'btn btn-info btn-xs'}}" {{($data->archived_status == 1) ? 'disabled' : ''}} > {{($data->archived_status == 1) ? 'Received the good' : 'Confirm'}} </a>
+                                                <a href="{{url('/')}}/admin/confirm-order/{{$invoice_details->invoice_id}}" class="{{($invoice_details->complete_time != 0) ? 'btn btn-success btn-xs' : 'btn btn-info btn-xs'}}" {{($invoice_details->complete_time != 0) ? 'disabled' : ''}} > {{($invoice_details->complete_time != 0) ? 'Received the good' : 'Confirm'}} </a>
                                                 <!-- <a class="btn btn-danger btn-xs">Delete</a> -->
                                             </div>
                                         </div>
@@ -59,12 +59,12 @@
                                     <!-- END timeline item -->
                                 @endif
 
-                                @if ($data->sent_datetime !== null)
+                                @if ($invoice_details->order_time !== null)
 
                                     <!-- timeline time label -->
                                     <li class="time-label">
                                         <span class="bg-red">
-                                            {{date("d M.Y",strtotime($data->sent_datetime))}}
+                                            {{date("d M.Y",strtotime($invoice_details->order_time))}}
                                         </span>
                                     </li>
                                     <!-- /.timeline-label -->
@@ -73,9 +73,9 @@
                                         <i class="fa fa-truck bg-yellow"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($data->sent_datetime))}}</span>
+                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($invoice_details->order_time))}}</span>
 
-                                            <h3 class="timeline-header">{{$data->warehouse}} sent the goods</h3>
+                                            <h3 class="timeline-header">{{$invoice_details->name}} sent the goods</h3>
                                         </div>
                                     </li>
                                     <!-- END timeline item -->
@@ -103,19 +103,15 @@
                                 <tbody>
                                     <tr>
                                         <th style="width: 50%">Customer Name</th>
-                                        <td>{{$customer_info_str->customer_name}}</td>
+                                        <td>{{$invoice_details->receiver_name}}</td>
                                     </tr>
                                     <tr>
                                         <th>Contact</th>
-                                        <td>{{$customer_info_str->contact}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Description</th>
-                                        <td>{{$customer_info_str->description}}</td>
+                                        <td>{{$invoice_details->receiver_contact}}</td>
                                     </tr>
                                     <tr>
                                         <th>Address</th>
-                                        <td>{{$customer_info_str->address}}</td>
+                                        <td>{{$invoice_details->address}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -123,38 +119,36 @@
                         <!-- /.box-body -->
                     </div>
                     <div class="row">
-                        @foreach ($product_list_str as $key => $product)
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="box box-solid box-info">
                                     <div class="box-header">
-                                        <h3 class="box-title">Product Information</h3>
+                                        <h3 class="box-title">Invoice Detail</h3>
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body no-padding">
                                         <table class="table table-striped">
                                             <tbody>
                                                 <tr>
-                                                    <th style="width: 50%">Proudct Name</th>
-                                                    <td>{{$product->product_name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Description</th>
-                                                    <td>{{$product->description}}</td>
+                                                    <th>Invoice ID</th>
+                                                    <td>{{$invoice_details->invoice_id}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Quantity</th>
-                                                    <td>{{$product->qty}}</td>
+                                                    <td>{{$invoice_details->quantity}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Net Weight</th>
-                                                    <td>{{$product->weight}}</td>
+                                                    <td>{{$invoice_details->weight}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Size</th>
+                                                    <td>{{$invoice_details->size}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
                     </div>
 
                 </div>

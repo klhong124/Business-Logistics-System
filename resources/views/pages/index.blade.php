@@ -88,6 +88,7 @@
     <body>
         <div class="flex-center position-ref full-height">
         <div class="top-right links">
+        <a href="{{ url('/') }}/csv-upload-page">Upload a CSV</a>
         <a href="{{ url('/') }}/service">Services</a>
         <a href="{{ url('/') }}/help">Help Center</a>
         <a href="{{ url('/') }}/about-us">About Us</a>
@@ -126,12 +127,12 @@
                     <input type="text" name="q" placeholder="Invoice Code Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                 </form> 
-                <form class="box" action="/uploadCSV" method="post" enctype="multipart/form-data">
+                <!-- <form class="box" action="/uploadCSV" method="post" enctype="multipart/form-data">
                     @csrf
                     Select image to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
                     <input type="submit" value="Upload Image" name="submit">
-                </form>
+                </form> -->
             </div>
         </div>
     </body>

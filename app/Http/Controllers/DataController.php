@@ -23,15 +23,32 @@ class DataController extends Controller
 
 	// orders
 	public function orders() {
-		$order_details = DB::table('invoice_process')
-			->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
-			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
-			->join('users', 'invoice_table.shipper_id', '=', 'users.id')
-			->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
-			->get();
+		$current_user_role = Auth::user()->role; 
 
-		// echo '<pre>'.print_r($order_details, 1).'</pre>';
-		return View::make('pages/orders')->with(array('order_details' => $order_details));
+		if ($current_user_role == '0') {
+			$order_details = DB::table('invoice_process')
+						->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+						->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+						->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+						->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
+						->get();
+
+					// echo '<pre>'.print_r($order_details, 1).'</pre>';
+					return View::make('pages/orders')->with(array('order_details' => $order_details));
+		} elseif ($current_user_role == '1') {
+			$current_user_id = Auth::user()->id;
+			
+			$order_details = DB::table('invoice_process')
+				->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+				->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+				->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+				->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
+				->where('invoice_table.shipper_id', $current_user_id)
+				->get();
+
+			// echo '<pre>'.print_r($order_details, 1).'</pre>';
+			return View::make('pages/orders')->with(array('order_details' => $order_details));
+		}	
 	}
 
 	// Archived changed
@@ -45,7 +62,7 @@ class DataController extends Controller
 		$invoice_id = $_POST['invoice_id'];
 		// $archived_status = ($_POST['archived_choice'] == 'Yes') ? "1" : "0";
 
-		if($_POST['archived_choice'] == 'Yes'){
+		if($_POST['archived_choice'] == 'Yes') {
 			DB::table('invoice_process')
 				->where('invoice_id', $invoice_id)
 				->update([
@@ -55,7 +72,8 @@ class DataController extends Controller
 
 			return back();
 		} else {
-			return View::make('pages/orders')->with(array('order_details' => $order_details));
+			// return View::make('pages/orders')->with(array('order_details' => $order_details));
+			return back();
 		}
 
 		// echo '<pre>'.print_r($datetime_now, 1).'</pre>';
@@ -66,7 +84,7 @@ class DataController extends Controller
 		$check = DB::table('invoice_process')
 			->select('invoice_id')
 			->where('invoice_id', $invoice_id)
-			->where('archived_status', NULL)
+			->where('complete_time', NULL)
 			->first();
 
 		// echo '<pre>'.print_r($check, 1).'</pre>';
@@ -87,18 +105,17 @@ class DataController extends Controller
 
 	// order details
 	public function details($invoice_id) {
-		$order_details = DB::table('order_details')
-			->select('invoice_id', 'warehouse', 'sent_datetime', 'arrived_datetime', 'received_datetime', 'archived_status')
-			->get();
-
-		$data = DB::table('order_details')
-			->select('order_details.*', 'dummy_2.*')
-			->join('dummy_2', 'dummy_2.invoice_id', 'order_details.invoice_id')
-			->where('order_details.invoice_id', $invoice_id)
+		$invoice_details = DB::table('invoice_process')
+			->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+			->join('invoice_detail', 'invoice_process.invoice_id', '=', 'invoice_detail.invoice_id')
+			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+			->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+			->select('invoice_process.*', 'invoice_receiver.*', 'invoice_detail.*', 'invoice_table.*', 'users.*')
+			->where('invoice_process.invoice_id', $invoice_id)
 			->first();
 
-		$product_list_str = json_decode(str_replace("'", '"', $data->product_list));
-		$customer_info_str = json_decode(str_replace("'", '"', $data->customer_info));
+		// $product_list_str = json_decode(str_replace("'", '"', $data->product_list));
+		// $customer_info_str = json_decode(str_replace("'", '"', $data->customer_info));
 
 		// $test = '[{"name": "John Doe",
 		// 	"address": "115 Dell Avenue, Somewhere",
@@ -114,10 +131,9 @@ class DataController extends Controller
 		// echo '<pre>'.print_r($product_list_str, 1).'</pre>';
 
 		return View::make('pages/order-details')->with(array(
-			'order_details' => $order_details,
-			'data' => $data,
-			'product_list_str' => $product_list_str,
-			'customer_info_str' => $customer_info_str
+			'invoice_details' => $invoice_details,
+			// 'product_list_str' => $product_list_str,
+			// 'customer_info_str' => $customer_info_str
 		));
 
 			// if ($order_details[0]->sent_datetime !== null) {
@@ -180,7 +196,7 @@ class DataController extends Controller
 		return View::make('pages/change-password');
 	}
 
-	// reset password (not yet done)
+	// reset password
 	public function resetPassword(Request $request){
 		if(Auth::Check()){
 			$current_password = Auth::user()->password;
@@ -274,14 +290,36 @@ class DataController extends Controller
 	}
 
 	public function processing() {
-		$order_details = DB::table('invoice_process')
-			->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
-			->join('users', 'invoice_table.shipper_id', '=', 'users.id')
-			->select('invoice_process.invoice_id', 'invoice_table.shipper_id', 'users.name', 'pickup_time','order_time', 'update_time', 'complete_time')
-			->where('invoice_process.complete_time', null)
-			->get();
+		$current_user_role = Auth::user()->role; 
+
+		if ($current_user_role == '0') {
+			$order_details = DB::table('invoice_process')
+				->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+				->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+				->select('invoice_process.invoice_id', 'invoice_table.shipper_id', 'users.name', 'pickup_time','order_time', 'update_time', 'complete_time')
+				->where('invoice_process.complete_time', null)
+				->get();
+				
+				// echo '<pre>'.print_r($order_details, 1).'</pre>';
+			
+				return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
+		} elseif ($current_user_role == '1') {
+			$current_user_id = Auth::user()->id;
+			
+			$order_details = DB::table('invoice_process')
+				->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
+				->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
+				->join('users', 'invoice_table.shipper_id', '=', 'users.id')
+				->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
+				->where([
+					['invoice_table.shipper_id', $current_user_id],
+					['invoice_process.complete_time', null],
+					])
+				->get();
+
 			// echo '<pre>'.print_r($order_details, 1).'</pre>';
-		return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
+			return View::make('pages/processing-orders')->with(array('order_details' => $order_details));
+		}
 	}
 
 	public function csv_reader() {
@@ -301,6 +339,15 @@ class DataController extends Controller
 		return back();
 	}
 
+	public function csvUploadPage() {
+		$page_name = 'Upload A CSV';
+
+		$error_message = '';
+		$success_message = '';
+
+		return View::make('pages/csv-upload')->with(array('error_message' => $error_message, 'success_message' => $success_message, 'page_name' => $page_name));
+	}
+
 	public function uploadCSV() {
 		// echo 'ab';
 		// $datetime = date("Y-m-d h:i:sa", $d);
@@ -311,7 +358,9 @@ class DataController extends Controller
 		$uploadOk = 1;
 
 		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
-		echo $new_name;
+		
+		$success_message = "";
+		$error_message = "";
 
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 		// Check if image file is a actual image or fake image
@@ -361,6 +410,7 @@ class DataController extends Controller
 		if($imageFileType != "csv" ) {
 		    echo "Sorry, only csv files are allowed.";
 		    $uploadOk = 0;
+			$error_message = 'Sorry, only csv files are allowed.';
 		}
 		if ($uploadOk == 0) {
 		    echo "Sorry, your file was not uploaded.";
@@ -373,8 +423,20 @@ class DataController extends Controller
 		    }
 		}
 
-		return back();
+		// return back();
+		// $error_message = '';
+		$page_name = 'Upload A CSV';
+		if ($uploadOk) {
+			
+			$success_message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded as ".basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
 
-		// print_r($invoice_id);
+			// check_csv_log();
+		}
+
+		return View::make('pages/csv-upload')->with(array('error_message' => $error_message, 'success_message' => $success_message, 'page_name' => $page_name));
+	}
+
+	public function check_csv_log() {
+		
 	}
 }

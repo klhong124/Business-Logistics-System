@@ -30,7 +30,7 @@
                     <thead>
                         <tr>
                             <th>Invoice No.</th>
-                            <th>Client</th>
+                            <th>Retailer</th>
                             <th>Order Time</th>
                             <th>Details</th>
                             <th>Updated At</th>
