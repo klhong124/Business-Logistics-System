@@ -349,8 +349,9 @@ class DataController extends Controller
 	}
 
 	public function uploadCSV() {
-		// echo 'ab';
-		// $datetime = date("Y-m-d h:i:sa", $d);
+		$success_message = "";
+		$error_message = "";
+
 		$date = date('Y-m-d H:i:s');
 		// echo strtotime($date);
 		$target_dir = "uploads/";
@@ -358,47 +359,8 @@ class DataController extends Controller
 		$uploadOk = 1;
 		$new_name = $target_dir . "data" . ".csv";
 		exec("uploads\csv_reader_API\main.exe");
-		$success_message = "";
-		$error_message = "";
 
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		// Check if image file is a actual image or fake image
-		if(isset($_POST["submit"])) {
-		    // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		    // if($check !== false) {
-		    //     echo "File is an image - " . $check["mime"] . ".";
-		    //     $uploadOk = 1;
-		    // } else {
-		    //     echo "File is not an image.";
-		    //     $uploadOk = 0;
-		    // }
-		}
-
-		// Check if file already exists
-		// if (file_exists($target_file)) {
-		//     echo "Sorry, file already exists.";
-		//     $uploadOk = 0;
-		// }
-
-		// Get all file names in uploads
-		// $file_names_in_uploads = scandir($target_dir);
-		// $file_count = 1;
-		// $changed_the_name = false;
-		// $new_name = "";
-		// // $new_name = getNewName($file_names_in_uploads, basename($_FILES["fileToUpload"]["name"]), $file_count);
-
-		// foreach ($file_names_in_uploads as &$file_name) {
-		// 	if (in_array(basename($_FILES["fileToUpload"]["name"]).$file_count, $file_names_in_uploads)) {
-		// 		// if ( (basename($_FILES["fileToUpload"]["name"]).$file_count) == $file_name) {
-		// 		//     print_r($file_name . $file_count);
-		// 	    $file_count += 1;
-		// 		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . $file_count . ".csv";
-		// 	// 	$changed_the_name = true;
-		// 	} else {
-		// 		$new_name = $target_dir . basename($_FILES["fileToUpload"]["name"], ".csv") . $file_count . ".csv";
-		// 	}
-		// }
-		// print_r($new_name);
 
 		// Check file size
 		if ($_FILES["fileToUpload"]["size"] > 500000) {
@@ -423,14 +385,17 @@ class DataController extends Controller
 		}
 
 		// return back();
-		// $error_message = '';
 		$page_name = 'Upload A CSV';
 		if ($uploadOk) {
 			$success_message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded as ".basename($_FILES["fileToUpload"]["name"], ".csv") . strtotime($date) . ".csv";
 			// check_csv_log();
 		}
 
-		return View::make('pages/csv-upload')->with(array('error_message' => $error_message, 'success_message' => $success_message, 'page_name' => $page_name));
+		// read python log
+		$strJsonFileContents = file_get_contents(public_path() . "/uploads/csv_log.json");
+		$json_array = json_decode($strJsonFileContents, true);
+
+		return View::make('pages/csv-upload')->with(array('error_message' => $error_message, 'success_message' => $success_message, 'page_name' => $page_name, 'python_last_message' => end($json_array)));
 	}
 
 	public function check_csv_log() {

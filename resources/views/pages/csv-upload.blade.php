@@ -8,9 +8,9 @@
 </div>
 @endif
 
-@if(!empty($success_message))
+@if(!empty($python_last_message))
 <div class="alert alert-success" role="alert">
-    {{$success_message}}
+    {{$python_last_message['name']}} has been uploaded at {{$python_last_message['time']}}
 </div>
 @endif
 
