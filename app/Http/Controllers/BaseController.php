@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use Auth;
 use Session;
 use View;
@@ -75,6 +76,77 @@ class BaseController extends Controller
 			->first();
 
 		// echo '<pre>'.print_r($data, 1).'</pre>';
-		return View::make('pages/confirm-invoice')->with(array('page_name' => $page_name, 'data' => $data));
+		return View::make('pages/confirm-invoice')->with(array('page_name' => $page_name, 'data' => $data, 'invoice_id' => $invoice_id));
+	}
+	public function printInvoice($invoice_id) {
+		
+		$page_name = 'Confirm Invoice';
+		
+		$data = DB::table('invoice_table')
+			->join('invoice_receiver', 'invoice_receiver.invoice_id', 'invoice_table.invoice_id')
+			->join('invoice_process', 'invoice_process.invoice_id', 'invoice_table.invoice_id')
+			->join('invoice_detail', 'invoice_detail.invoice_id', 'invoice_table.invoice_id')
+			->join('users', 'users.id', 'invoice_table.shipper_id')
+			->join('users_detail', 'users_detail.id', 'invoice_table.shipper_id')
+			->where('invoice_table.invoice_id', $invoice_id)
+			->first();
+
+
+		print_r($data);
+
+		$html = '
+		<h1>CC Logistics</h1>
+		<small>'.date("Y-m-d h:m:s").'</small>
+		<h1 style="text-align: center;">Invoice</h1>
+		<hr></hr>
+		<h2>Receiver Details</h2>
+		<table style="width:100%">
+			<tr>
+				<td>Name: </td>
+				<td>'.$data->receiver_name.'</td> 
+			</tr>
+			<tr>
+				<td>Contact: </td>
+				<td>'.$data->contact.'</td> 
+			</tr>
+			<tr>
+				<td>Address: </td>
+				<td>'.$data->address.'</td> 
+			</tr>
+	  	</table>
+		<h2>Shipper</h2>
+		<table style="width:100%">
+			<tr>
+				<td>Name: </td>
+				<td>'.$data->name.'</td> 
+			</tr>
+			<tr>
+				<td>Email: </td>
+				<td>'.$data->email.'</td> 
+			</tr>
+			<tr>
+				<td>URL: </td>
+				<td>'.$data->url.'</td> 
+			</tr>
+		</table>
+		<h2>Goods Information</h2>
+		<table style="width:100%">
+			<tr>
+				<td>Quantity: </td>
+				<td>'.$data->quantity.'</td> 
+			</tr>
+			<tr>
+				<td>Net Weight: </td>
+				<td>'.$data->weight.'</td> 
+			</tr>
+		</table>
+		<h3>Order Status</h3>
+		<p>Your order had been delivered at: '.$data->complete_time.'</p>';
+		$pdf = App::make('dompdf.wrapper');
+		$pdf->loadHTML($html);
+		return $pdf->stream();
+
+		// echo '<pre>'.print_r($data, 1).'</pre>';
+		// return View::make('pages/confirm-invoice')->with(array('page_name' => $page_name, 'data' => $data));
 	}
 }

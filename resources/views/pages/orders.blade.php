@@ -29,13 +29,16 @@
                 <table id="order-list" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Invoice No.</th>
-                            <th>Retailer</th>
-                            <th>Order Time</th>
-                            <th>Details</th>
-                            <th>Updated At</th>
-                            <th>Archived</th>
-                            <th></th>
+                            <th><center> Invoice No. </center></th>
+                            <th><center> Order Time </center></th>
+                            <th><center> Retailer </center></th>
+                            <th><center> Reciever </center></th>
+                            <th><center> Updated At </center></th>
+                            <th><center> Details </center></th>
+                            <th><center> Archived </center></th>
+                            @if (Auth::user()->role == '0')
+                                <th></th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -43,34 +46,54 @@
                             <tr>
                                 <form method="POST" action="/admin/order-post">
                                     {!! csrf_field() !!}
+                                    <!--Invoice No.-->
                                     <td>
-                                        {{$order->invoice_id}}
+                                        <center>
+                                        <a style="color:black" href="{{url('/')}}/admin/order-details/{{$order->invoice_id}}">{{$order->invoice_id}}</a>
                                         <input hidden name="invoice_id" value="{{$order->invoice_id}}">
+                                        </center> 
                                     </td>
-                                    <td>
-                                        <a href="{{url('/')}}/admin/retailer/{{$order->shipper_id}}">
-                                            <button type="button" class="btn btn-block btn-sm btn-link">{{$order->name}}</button>
-                                        </a>
-                                    </td>
-                                    <td>{{$order->order_time}}</td>
-                                    <td><a href="{{url('/')}}/admin/order-details/{{$order->invoice_id}}"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></td>
-                                    <td>{{$order->update_time}}</td>
 
+                                     <!--Order Time-->
+                                     <td><center>{{$order->order_time}}</center></td>
+
+                                    <!--Retailer-->
+                                    <td>
+                                        <center> 
+                                        <a style="color:black;text-align:center;" href="{{url('/')}}/admin/retailer/{{$order->shipper_id}}">{{$order->name}}</a>
+                                        </center>
+                                    </td>
+
+                                    <!--Reciever-->
+                                    <td><center>{{$order->receiver_name}}</center></td>
+                                   
+                                    <!--Updated At-->
+                                    <td><center>{{$order->update_time}}</center></td>
+
+                                    <!--Details-->
+                                    <td><center><a href="{{url('/')}}/admin/order-details/{{$order->invoice_id}}"><button type="button" class="btn btn-block btn-sm btn-link">See More</button></a></center></td>
+
+                                    <!--Archived-->
                                     {{-- check archived status --}}
                                         <td class="archived-td">
+                                            <center>
                                             <div class="form-group">
                                                 <select class="form-control form-control-sm" name="archived_choice" disabled>
-                                                    <option {{($order->complete_time != 0) ? 'selected' : ''}}>Yes</option>
-                                                    <option {{($order->complete_time == 0) ? 'selected' : ''}}>No</option>
+                                                    <option {{($order->pickup_time != 0) ? 'selected' : ''}}>Yes</option>
+                                                    <option {{($order->pickup_time == 0) ? 'selected' : ''}}>No</option>
                                                 </select>
                                             </div>
+                                            </center>
                                         </td>
-                                        <td class="btn-group-td">
-                                            <button type="button" class="btn btn-block btn-sm btn-primary edit-btn" {{($order->complete_time != 0) ? 'disabled' : ''}}>Edit</button>
-                                            <button type="submit" class="btn btn-block btn-sm btn-primary hide save-btn">Save</button>
-                                            <button type="button" class="btn btn-block btn-sm btn-primary hide cancel-btn">Cancel</button>
-                                        </td>
-
+                                        @if (Auth::user()->role == '0')
+                                            <td class="btn-group-td">
+                                                <center>
+                                                    <button type="button" class="btn btn-block btn-sm btn-primary edit-btn" {{($order->pickup_time != 0) ? 'disabled' : ''}}>Edit</button>
+                                                    <button type="submit" class="btn btn-block btn-sm btn-primary hide save-btn">Save</button>
+                                                    <button type="button" class="btn btn-block btn-sm btn-primary hide cancel-btn">Cancel</button>
+                                                </center>
+                                            </td>
+                                        @endif
                                 </form>
                             </tr>
                         @endforeach

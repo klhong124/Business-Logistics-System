@@ -100,8 +100,13 @@
                         </ul>
                 </div>
               </div>
-              <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit"><i class="fas fa-print"></i> Print Invoice</button>
+              
+              <?php
+                // echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
+                if( !empty($data->complete_time) ){ ?>
+                  <hr class="mb-4">
+                  <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="location.href='/print-invoice/{{$invoice_id}}';" ><i class="fas fa-print"></i> Print Invoice</button>
+                <?php } ?>
           </div>
         </div>
       </div>

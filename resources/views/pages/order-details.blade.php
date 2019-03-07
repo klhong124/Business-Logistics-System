@@ -22,7 +22,7 @@
         -------------------------->
         <!-- timeline -->
             <!-- Main content -->
-            <section class="content">
+            <section class="content center">
 
                 <!-- row -->
                 <div class="row">
@@ -30,12 +30,12 @@
                         <!-- The time line -->
                         <ul class="timeline">
 
-                                @if ($invoice_details->pickup_time)
+                                @if ($invoice_details->complete_time)
 
                                     <!-- timeline time label -->
                                     <li class="time-label">
                                         <span class="bg-red">
-                                            {{date("d M.Y",strtotime($invoice_details->pickup_time))}}
+                                            {{date("d M.Y",strtotime($invoice_details->complete_time))}}
                                         </span>
                                     </li>
                                     <!-- /.timeline-label -->
@@ -44,14 +44,26 @@
                                         <i class="fa fa-cubes bg-blue"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($invoice_details->pickup_time))}}</span>
+                                            <span class="time"><i class="fa fa-clock-o"></i> {{date("H:i:s",strtotime($invoice_details->complete_time))}}</span>
 
                                             <h3 class="timeline-header">
-                                                Goods arrived
+                                                Goods arrival
                                             </h3>
 
                                             <div class="timeline-footer">
-                                                <a href="{{url('/')}}/admin/confirm-order/{{$invoice_details->invoice_id}}" class="{{($invoice_details->complete_time != 0) ? 'btn btn-success btn-xs' : 'btn btn-info btn-xs'}}" {{($invoice_details->complete_time != 0) ? 'disabled' : ''}} > {{($invoice_details->complete_time != 0) ? 'Received the good' : 'Confirm'}} </a>
+                                                @if (Auth::user()->role == '0')
+                                                    @if ($invoice_details->pickup_time == null)
+                                                        <a href="{{url('/')}}/admin/confirm-order/{{$invoice_details->invoice_id}}" class="btn btn-info btn-xs"> Confirm </a>
+                                                    @else
+                                                        <a class="btn success btn-xs disable"> Received </a>
+                                                    @endif
+                                                @else
+                                                    @if ($invoice_details->pickup_time == null)
+                                                        <p class="btn btn-info btn-xs disable" > Arrived </p>
+                                                    @else
+                                                        <p class="btn btn-success btn-xs disable"> Received </p>
+                                                    @endif
+                                                @endif
                                                 <!-- <a class="btn btn-danger btn-xs">Delete</a> -->
                                             </div>
                                         </div>
@@ -93,30 +105,35 @@
 
                 <div>
                     <br>
-                    <div class="box box-solid box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">Customer Information</h3>
+                    <p style="float:right;color:gray;"><button class="reloadbth" onclick=location.reload();>Last updated: {{$current_time}}&nbsp;&#x21bb;</button></p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-solid box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Customer Information</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body no-padding">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th style="width: 50%">Customer Name</th>
+                                                <td>{{$invoice_details->receiver_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Contact</th>
+                                                <td>{{$invoice_details->receiver_contact}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Address</th>
+                                                <td>{{$invoice_details->address}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <!-- /.box-body -->
+                            </div>
                         </div>
-                        <!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th style="width: 50%">Customer Name</th>
-                                        <td>{{$invoice_details->receiver_name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Contact</th>
-                                        <td>{{$invoice_details->receiver_contact}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Address</th>
-                                        <td>{{$invoice_details->address}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
                     </div>
                     <div class="row">
                             <div class="col-md-12">
@@ -160,3 +177,24 @@
   </div>
   <!-- /.content-wrapper -->
   @include('adminlte-layouts.footer')
+<style>
+.center {
+  margin: auto;
+  max-width: 1000px;
+}
+.disable{
+    pointer-events: none;
+}
+.currenttime{
+    float:right;
+}
+.reloadbth{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+</style>
+

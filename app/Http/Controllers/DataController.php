@@ -15,6 +15,8 @@ use Illuminate\Routing\Redirector;
 use Hash;
 use App\User;
 
+date_default_timezone_set('Asia/Hong_Kong');
+
 class DataController extends Controller
 {
 	// homepage
@@ -67,7 +69,7 @@ class DataController extends Controller
 			DB::table('invoice_process')
 				->where('invoice_id', $invoice_id)
 				->update([
-					'complete_time' => NOW(),
+					'pickup_time' => NOW(),
 					'update_time' => NOW()
 				]);
 
@@ -85,7 +87,7 @@ class DataController extends Controller
 		$check = DB::table('invoice_process')
 			->select('invoice_id')
 			->where('invoice_id', $invoice_id)
-			->where('complete_time', NULL)
+			->where('pickup_time', NULL)
 			->first();
 
 		// echo '<pre>'.print_r($check, 1).'</pre>';
@@ -94,7 +96,7 @@ class DataController extends Controller
 			DB::table('invoice_process')
 			->where('invoice_id', $invoice_id)
 			->update([
-				'complete_time' => NOW(),
+				'pickup_time' => NOW(),
 				'update_time' => NOW()
 			]);
 		}
@@ -115,6 +117,8 @@ class DataController extends Controller
 			->where('invoice_process.invoice_id', $invoice_id)
 			->first();
 
+		$current_time = NOW();
+
 		// $product_list_str = json_decode(str_replace("'", '"', $data->product_list));
 		// $customer_info_str = json_decode(str_replace("'", '"', $data->customer_info));
 
@@ -133,6 +137,7 @@ class DataController extends Controller
 
 		return View::make('pages/order-details')->with(array(
 			'invoice_details' => $invoice_details,
+			'current_time' => $current_time
 			// 'product_list_str' => $product_list_str,
 			// 'customer_info_str' => $customer_info_str
 		));
@@ -295,10 +300,11 @@ class DataController extends Controller
 
 		if ($current_user_role == '0') {
 			$order_details = DB::table('invoice_process')
+				->join('invoice_receiver', 'invoice_process.invoice_id', '=', 'invoice_receiver.invoice_id')
 				->join('invoice_table', 'invoice_process.invoice_id', '=', 'invoice_table.invoice_id')
 				->join('users', 'invoice_table.shipper_id', '=', 'users.id')
-				->select('invoice_process.invoice_id', 'invoice_table.shipper_id', 'users.name', 'pickup_time','order_time', 'update_time', 'complete_time')
-				->where('invoice_process.complete_time', null)
+				->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
+				->where('invoice_process.pickup_time', null)
 				->get();
 				
 				// echo '<pre>'.print_r($order_details, 1).'</pre>';
@@ -314,7 +320,7 @@ class DataController extends Controller
 				->select('invoice_process.*', 'invoice_receiver.*', 'invoice_table.*', 'users.*')
 				->where([
 					['invoice_table.shipper_id', $current_user_id],
-					['invoice_process.complete_time', null],
+					['invoice_process.pickup_time', null],
 					])
 				->get();
 
@@ -334,7 +340,7 @@ class DataController extends Controller
 		$order_details = DB::table('invoice_process')
 			->where('invoice_id', $invoice_id)
 			->update([
-				'complete_time' => NOW()
+				'pickup_time' => NOW()
 				]);
 		return back();
 	}

@@ -59,6 +59,7 @@ Route::get('/test', 'BaseController@test');
 
 
 Route::get('/confirm-invoice/{invoice_id}', 'BaseController@confirmInvoice');
+Route::get('/print-invoice/{invoice_id}', 'BaseController@printInvoice');
 
 Route::get('/service', 'BaseController@service');
 

@@ -10,7 +10,7 @@
 
 @if(!empty($python_last_message))
 <div class="alert alert-success" role="alert">
-    {{$python_last_message['name']}} has been uploaded at {{$python_last_message['time']}}
+    {{$python_last_message['name']}} has been uploaded at {{$python_last_message['time']}}  (Invoice ID:  <a href="#">{{$python_last_message['invoice_id']}}</a>)
 </div>
 @endif
 

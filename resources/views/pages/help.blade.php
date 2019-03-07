@@ -37,7 +37,7 @@
             <td>{{$result->quantity}}</td>
             <td>{{$result->weight}}</td>
             <td>{{$result->size}}</td>
-            <td><a href="{{url('/')}}/admin/orders">View</a></td>
+            <td><a href="{{url('/')}}/admin/order-details/{{$result->invoice_id}}">View</a></td>
           </tr>
         </tbody>
       </table>

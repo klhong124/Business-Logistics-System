@@ -1,2 +1,4 @@
-shipper_name,quantity,weight,receiver_name,receiver_address,receiver_contact
-aaqwwdsW,1,1,Web Store 1,"NO.45, WO HING TSUEN,NO. 45, WO HING TSUEN, NORTH, NT",98765432
+"shipper_name","shipper_email","quantity","weight","receiver_name","receiver_address","receiver_contact"
+"KENNY LTD","KB@www","33","50kg","ALVIN","Cityu SCOPE LI-4302","(852) 2180 0000"
+"EDMOND","SB@www","88","88kg","YIN","Tsim Sha Tsui SCOPE CP3LT1","999"
+"Cheeper","0N9@www","87","87kg","COW","Tsim Sha Tsui SCOPE L1-2301","911"
