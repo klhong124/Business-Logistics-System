@@ -3,7 +3,7 @@
 @section('main-content')
 
     <div class="container">
-      <div style="height: 200px;"></div>
+      <div style="height: 80px;"></div>
       <div class="py-5 text-center">
         {{-- <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> --}}
         <h2>Confirmation form</h2>
@@ -12,26 +12,30 @@
       <div class="row">
         {{-- right hand side --}}
         <div class="col-md-4 order-md-2 mb-4">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;">
               <div class="card-body">
-                <h5 class="card-title">QR Code</h5>
-                <p class="card-text">Please scan the code below to confirm the order</p>
+                
+                <h5 class="card-title">{{$data->complete_time == "" ? "QR Code" : "Order Status"}}</h5>
+                <p class="card-text">{{$data->complete_time == "" ? "Please scan the code below to confirm the order" : "Here is the latest status of your order"}}</p>
                 <ul class="list-group mb-2">
                     <?php
-                      echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
-                      // echo QRCode::url('http://ls27.asuscomm.com:8080/complete_invoice/60')
-                      ->setSize(8)
-                      ->setMargin(2)
-                      ->svg();
+                      // echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
+                      if( !empty($data->complete_time) ){
+                        echo 'Your order had been delivered at'.': '.$data->complete_time; 
+                      }else{
+                        echo QRCode::url('http://ls27.asuscomm.com:302/complete_invoice/'.$data->invoice_id)
+                        ->setSize(8)
+                        ->setMargin(1)
+                        ->svg();
+                      }
                     ?>
                   </ul>
               </div>
             </div>
         </div>
-
         {{-- left hand side --}}
-        <div class="card-body">
-          <div class="col-md-8 order-md-1">
+        <div class="col-md-8 order-md-1">
+            <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; padding: 36px;">
             <h4 class="mb-3">Receiver Details</h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
