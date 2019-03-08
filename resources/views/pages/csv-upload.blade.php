@@ -9,9 +9,19 @@
 @endif
 
 @if(!empty($python_last_message))
-<div class="alert alert-success" role="alert">
-    {{$python_last_message['name']}} has been uploaded at {{$python_last_message['time']}}  (Invoice ID:  <a href="#">{{$python_last_message['invoice_id']}}</a>)
-</div>
+  @if($python_last_message['status'] == 'success') 
+    <div class="alert alert-success" role="alert">
+      {{$python_last_message['name']}} has been uploaded at {{$python_last_message['time']}} 
+      (Invoice ID:  <a href="/query?q={{$python_last_message['invoice_id']}}">{{$python_last_message['invoice_id']}}</a>)
+    </div>
+  @else
+    <div class="alert alert-danger" role="alert">
+      <p><strong>Error Occur:</strong></p>
+      <p><b>Please check your .csv file </b></p>
+      <hr>
+      <p><small>{{$python_last_message['status']}}</small></p>
+    </div>
+  @endif
 @endif
 
   <div class="div-space"></div>

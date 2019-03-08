@@ -67,11 +67,11 @@ class BaseController extends Controller
 	public function confirmInvoice($invoice_id) {
 		$page_name = 'Confirm Invoice';
 		$data = DB::table('invoice_table')
-			->join('invoice_receiver', 'invoice_receiver.invoice_id', 'invoice_table.invoice_id')
-			->join('invoice_process', 'invoice_process.invoice_id', 'invoice_table.invoice_id')
-			->join('invoice_detail', 'invoice_detail.invoice_id', 'invoice_table.invoice_id')
-			->join('users', 'users.id', 'invoice_table.shipper_id')
-			->join('users_detail', 'users_detail.id', 'invoice_table.shipper_id')
+			->leftJoin('invoice_receiver', 'invoice_receiver.invoice_id', 'invoice_table.invoice_id')
+			->leftJoin('invoice_process', 'invoice_process.invoice_id', 'invoice_table.invoice_id')
+			->leftJoin('invoice_detail', 'invoice_detail.invoice_id', 'invoice_table.invoice_id')
+			->leftJoin('users', 'users.id', 'invoice_table.shipper_id')
+			->leftJoin('users_detail', 'users_detail.id', 'invoice_table.shipper_id')
 			->where('invoice_table.invoice_id', $invoice_id)
 			->first();
 

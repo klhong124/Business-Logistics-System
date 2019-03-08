@@ -163,7 +163,11 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div style="text-align: center;">
+                                            <a href="{{url('/')}}/confirm-invoice/{{$invoice_details->invoice_id}}"><i class="fa fa-angle-double-down fa-3x"></i></a>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                     </div>

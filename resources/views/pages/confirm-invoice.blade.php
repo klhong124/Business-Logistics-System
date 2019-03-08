@@ -15,15 +15,15 @@
           <div class="card" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;">
               <div class="card-body">
                 
-                <h5 class="card-title">{{$data->complete_time == "" ? "QR Code" : "Order Status"}}</h5>
-                <p class="card-text">{{$data->complete_time == "" ? "Please scan the code below to confirm the order" : "Here is the latest status of your order"}}</p>
+                <h5 class="card-title">{{$data->pickup_time == "" ? "QR Code" : "Order Status"}}</h5>
+                <p class="card-text">{{$data->pickup_time == "" ? "Please scan the code below to confirm the order" : "Here is the latest status of your order"}}</p>
                 <ul class="list-group mb-2">
                     <?php
                       // echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
-                      if( !empty($data->complete_time) ){
-                        echo 'Your order had been delivered at'.': '.$data->complete_time; 
+                      if( !empty($data->pickup_time) ){
+                        echo 'Your order had been delivered at'.': '.$data->pickup_time; 
                       }else{
-                        echo QRCode::url('http://ls27.asuscomm.com:302/complete_invoice/'.$data->invoice_id)
+                        echo QRCode::url('http://ls27.asuscomm.com:302/complete_invoice/'.$invoice_id)
                         ->setSize(8)
                         ->setMargin(1)
                         ->svg();
@@ -47,7 +47,7 @@
               <div class="mb-3">
                 <label>Contact</label>
                 <div class="input-group">
-                  <input type="text" disabled class="form-control" value="{{$data->contact}}">
+                  <input type="text" disabled class="form-control" value="{{$data->receiver_contact}}">
                 </div>
               </div>
 
@@ -103,7 +103,7 @@
               
               <?php
                 // echo QRCode::url('http://'.$_SERVER['REMOTE_ADDR'].':8080/complete_invoice'.'/'.$data->invoice_id)
-                if( !empty($data->complete_time) ){ ?>
+                if( !empty($data->pickup_time) ){ ?>
                   <hr class="mb-4">
                   <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="location.href='/print-invoice/{{$invoice_id}}';" ><i class="fas fa-print"></i> Print Invoice</button>
                 <?php } ?>

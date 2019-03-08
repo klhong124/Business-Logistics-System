@@ -342,7 +342,7 @@ class DataController extends Controller
 			->update([
 				'pickup_time' => NOW()
 				]);
-		return back();
+		return redirect('confirm-invoice/'.$invoice_id);
 	}
 
 	public function csvUploadPage() {
@@ -398,15 +398,20 @@ class DataController extends Controller
 			// check_csv_log();
 		}
 
+		if ($uploadOk) {
+			#Desktop
+			$output = shell_exec("D:\GitHub\csv_reader\main.py");
+			echo "<script>console.log(`{$output}`);</script>";
+			#surfaceBook
+			#exec("uploads\csv_reader_API\main.exe");
+		}
 
-		#Desktop
-		exec("D:\GitHub\csv_reader\main.py");
-		#surfaceBook
-		#exec("uploads\csv_reader_API\main.exe");
-
-		// read python log
-		$strJsonFileContents = file_get_contents(public_path() . "/uploads/csv_log.json");
-		$json_array = json_decode($strJsonFileContents, true);
+		$json_array = [];
+		if ($uploadOk) {
+			// read python log
+			$strJsonFileContents = file_get_contents(public_path() . "/uploads/csv_log.json");
+			$json_array = json_decode($strJsonFileContents, true);
+		}
 
 		return View::make('pages/csv-upload')->with(array('error_message' => $error_message, 'success_message' => $success_message, 'page_name' => $page_name, 'python_last_message' => end($json_array)));
 	}
