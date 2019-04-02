@@ -133,9 +133,9 @@ $(document).ready(function() {
 
     $('.edit-btn').click(function() {
         $(this).hide();
-        var form = $(this).parent().parent();
+        var form = $(this).parent().parent().parent();
 
-        form.find('.archived-td').children().children().prop('disabled', false);
+        form.find('.archived-td').children().children().children().prop('disabled', false);
         form.find('.btn-group-td .save-btn').removeClass('hide');
         form.find('.btn-group-td .cancel-btn').removeClass('hide');
     });
