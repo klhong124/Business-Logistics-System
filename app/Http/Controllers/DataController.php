@@ -400,7 +400,7 @@ class DataController extends Controller
 
 		if ($uploadOk) {
 			#Desktop
-			$output = shell_exec("D:\GitHub\csv_reader\main.py");
+			$output = shell_exec("D:\GitHub\CSV-Converter\main.py");
 			echo "<script>console.log(`{$output}`);</script>";
 			#surfaceBook
 			#exec("uploads\csv_reader_API\main.exe");
